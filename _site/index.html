@@ -327,23 +327,24 @@ class="uri">https://github.com/rstudio/blogdown</a>.</p>
 <script src="javascript.js"></script>
 <div id="this-is-a-plot" class="section level1">
 <h1>This is a plot</h1>
-<pre class="r"><code>library(googleVis)</code></pre>
-<pre><code>## 
-## Welcome to googleVis version 0.7.0
-## 
-## Please read Google&#39;s Terms of Use
-## before you start using the package:
-## https://developers.google.com/terms/
-## 
-## Note, the plot method of googleVis will by default use
-## the standard browser to display its output.
-## 
-## See the googleVis package vignettes for more details,
-## or visit https://mages.github.io/googleVis/.
-## 
-## To suppress this message use:
-## suppressPackageStartupMessages(library(googleVis))</code></pre>
-<pre class="r"><code>set.seed(2020)
+<pre class="r"><code>library(trelliscopejs)
+library(ggplot2)
+library(gapminder)
+qplot(year, lifeExp, data = gapminder) +
+  xlim(1948, 2011) + ylim(10, 95) + theme_bw() +
+  facet_trelliscope(~ country + continent, nrow = 2, ncol = 7, width = 300, path = &quot;.&quot;)</code></pre>
+<div id="htmlwidget-d0b73471da45d0fd1f6e" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d0b73471da45d0fd1f6e">{"x":{"id":"0ff35b45","config_info":"'./appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"by_country_continent","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>print(params$year)</code></pre>
+<pre><code>## [1] 2018</code></pre>
+<pre class="r"><code>print(params$region)</code></pre>
+<pre><code>## [1] &quot;Europe&quot;</code></pre>
+<pre class="r"><code>print(params$printcode)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>library(googleVis)
+op &lt;- options(gvis.plot.tag=&#39;chart&#39;)
+
+set.seed(2020)
 x &lt;- seq(0,100,by=0.5)
 y &lt;- (50-x)^2+rnorm(length(x),sd=100)
  
@@ -367,7 +368,7 @@ gvScat &lt;- gvisScatterChart(curvy,
  
 print(gvScat,&#39;chart&#39;)</code></pre>
 <!-- ScatterChart generated in R 4.2.1 by googleVis 0.7.0 package -->
-<!-- Wed Jul 20 23:38:46 2022 -->
+<!-- Wed Jul 20 23:43:08 2022 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  

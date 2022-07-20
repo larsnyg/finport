@@ -18,7 +18,7 @@ Please also note that simple R Markdown sites are _not_ based on **blogdown**. T
 
 
 # This is a plot
-```{r, include=FALSE, message=FALSE}
+```{r, message=FALSE}
 library(trelliscopejs)
 library(ggplot2)
 library(gapminder)
@@ -27,7 +27,7 @@ qplot(year, lifeExp, data = gapminder) +
   facet_trelliscope(~ country + continent, nrow = 2, ncol = 7, width = 300, path = ".")
 ```
 
-```{r, include=FALSE}
+```{r}
 print(params$year)
 print(params$region)
 print(params$printcode)
@@ -35,6 +35,8 @@ print(params$printcode)
 
 ```{r, results='asis'}
 library(googleVis)
+op <- options(gvis.plot.tag='chart')
+
 set.seed(2020)
 x <- seq(0,100,by=0.5)
 y <- (50-x)^2+rnorm(length(x),sd=100)
