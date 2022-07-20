@@ -9,7 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="MLars Nygaard" />
 
+<meta name="date" content="2022-07-20" />
 
 <title>Oversikt</title>
 
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -60,6 +65,16 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
 
 
 
@@ -228,6 +243,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -235,6 +313,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -309,10 +397,19 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Oversikt</h1>
+<h4 class="author">MLars Nygaard</h4>
+<h4 class="date">2022-07-20</h4>
+<div class="abstract">
+<p class="abstract">Abstract</p>
+Financial Portal.
+</div>
 
 </div>
 
 
+<script type="text/javascript">
+$('.title').css('color', 'darkred')
+</script>
 <p>Hello, Website!</p>
 <p>For more information about simple R Markdown websites, please read
 the documentation at <a
@@ -325,50 +422,24 @@ websites (such as blogs), you may want to use <strong>blogdown</strong>
 instead: <a href="https://github.com/rstudio/blogdown"
 class="uri">https://github.com/rstudio/blogdown</a>.</p>
 <script src="javascript.js"></script>
-<div id="this-is-a-plot" class="section level1">
-<h1>This is a plot</h1>
+<div id="this-is-a-plot" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> This is a plot</h1>
 <pre class="r"><code>library(trelliscopejs)
 library(ggplot2)
 library(gapminder)
 qplot(year, lifeExp, data = gapminder) +
   xlim(1948, 2011) + ylim(10, 95) + theme_bw() +
   facet_trelliscope(~ country + continent, nrow = 2, ncol = 7, width = 300, path = &quot;.&quot;)</code></pre>
-<div id="htmlwidget-d0b73471da45d0fd1f6e" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d0b73471da45d0fd1f6e">{"x":{"id":"0ff35b45","config_info":"'./appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"by_country_continent","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f6b786f0277c65d34218" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6b786f0277c65d34218">{"x":{"id":"0ff35b45","config_info":"'./appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"by_country_continent","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>print(params$year)</code></pre>
 <pre><code>## [1] 2018</code></pre>
 <pre class="r"><code>print(params$region)</code></pre>
 <pre><code>## [1] &quot;Europe&quot;</code></pre>
 <pre class="r"><code>print(params$printcode)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>library(googleVis)
-op &lt;- options(gvis.plot.tag=&#39;chart&#39;)
-
-set.seed(2020)
-x &lt;- seq(0,100,by=0.5)
-y &lt;- (50-x)^2+rnorm(length(x),sd=100)
- 
-curvy &lt;- data.frame(x,y)
- 
- 
-gvScat &lt;- gvisScatterChart(curvy,
-                   options=list(
-                     explorer=&quot;{actions: [‘dragToZoom’,
-                     ‘rightClickToReset’],
-                     maxZoomIn:0.05}&quot;,
-                     chartArea=&quot;{width:’85%’,height:’80%’}&quot;,
-                     hAxis=&quot;{title: ‘Explanatory x’,
-                     titleTextStyle: {color: ‘#000000’}}&quot;,
-                     vAxis=&quot;{title: ‘Response y’,
-                     titleTextStyle: {color: ‘#000000’}}&quot;,
-                     title=&quot;Curvilinear Relationship&quot;,
-                     width=550, height=500,
-                     legend=&quot;none&quot;),
-                   chartid=&quot;ZoomZoom&quot;)
- 
-print(gvScat,&#39;chart&#39;)</code></pre>
 <!-- ScatterChart generated in R 4.2.1 by googleVis 0.7.0 package -->
-<!-- Wed Jul 20 23:43:08 2022 -->
+<!-- Wed Jul 20 23:55:39 2022 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
@@ -1266,6 +1337,8 @@ callbacks.shift()();
 <p>Copyright &copy; 2016 Skynet, Inc. All rights reserved.</p>
 
 
+</div>
+</div>
 
 </div>
 
@@ -1298,6 +1371,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
