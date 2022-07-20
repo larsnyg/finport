@@ -13,43 +13,50 @@ For more information about simple R Markdown websites, please read the documenta
 Please also note that simple R Markdown sites are _not_ based on **blogdown**. They are probably good for websites with only a few Rmd documents. For larger-scale and more sophisticated websites (such as blogs), you may want to use **blogdown** instead: https://github.com/rstudio/blogdown.
 
 <script src="javascript.js"></script>
-<script src="https://unpkg.com/trelliscopejs-lib/dist/trelliscope.min.js"></script>
-<div id="8a43f2dd" class="trelliscope-not-spa" style="width:800px; height:500px;"></div>
 
 
 
 
 # This is a plot
-```{r}
+```{r, include=FALSE, message=FALSE}
 library(trelliscopejs)
 library(ggplot2)
 library(gapminder)
 qplot(year, lifeExp, data = gapminder) +
   xlim(1948, 2011) + ylim(10, 95) + theme_bw() +
-  facet_trelliscope(~ country + continent, nrow = 2, ncol = 7, width = 300)
+  facet_trelliscope(~ country + continent, nrow = 2, ncol = 7, width = 300, path = ".")
 ```
 
-```{r}
-forex <- data.table::fread("file.csv")
-DT::datatable(forex)
+```{r, include=FALSE}
 print(params$year)
 print(params$region)
 print(params$printcode)
 ```
 
-# Interactive plot
-
-```{r}
-tmap_mode("view")
-
-tm_shape(World) +
-    tm_polygons("HPI")
+```{r, results='asis'}
+library(googleVis)
+set.seed(2020)
+x <- seq(0,100,by=0.5)
+y <- (50-x)^2+rnorm(length(x),sd=100)
+ 
+curvy <- data.frame(x,y)
+ 
+ 
+gvScat <- gvisScatterChart(curvy,
+                   options=list(
+                     explorer="{actions: [‘dragToZoom’,
+                     ‘rightClickToReset’],
+                     maxZoomIn:0.05}",
+                     chartArea="{width:’85%’,height:’80%’}",
+                     hAxis="{title: ‘Explanatory x’,
+                     titleTextStyle: {color: ‘#000000’}}",
+                     vAxis="{title: ‘Response y’,
+                     titleTextStyle: {color: ‘#000000’}}",
+                     title="Curvilinear Relationship",
+                     width=550, height=500,
+                     legend="none"),
+                   chartid="ZoomZoom")
+ 
+print(gvScat,'chart')
 ```
 
-
-<script>
-  (function() {
-    trelliscopeApp('8a43f2dd',
-      'http://hafen.github.io/trelliscopejs-demo/housing/appfiles/config.jsonp');
-  })();
-</script>

@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,16 +30,11 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="site_libs/datatables-binding-0.23/datatables.js"></script>
-<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
-<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<script src="site_libs/trelliscopejs_widget-0.3.2/trelliscope.min.js"></script>
+<script src="site_libs/trelliscopejs_widget-binding-0.2.6/trelliscopejs_widget.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -332,18 +327,939 @@ class="uri">https://github.com/rstudio/blogdown</a>.</p>
 <script src="javascript.js"></script>
 <div id="this-is-a-plot" class="section level1">
 <h1>This is a plot</h1>
-<pre class="r"><code>plot(iris)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<pre class="r"><code>forex &lt;- data.table::fread(&quot;file.csv&quot;)
-DT::datatable(forex)</code></pre>
-<div id="htmlwidget-a8324edbfa2ad0be9458" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a8324edbfa2ad0be9458">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","443","444","445","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","471","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","542","543","544","545","546","547","548","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572","573","574","575","576","577","578","579","580","581","582","583","584","585","586","587","588","589","590","591","592","593","594","595","596","597","598","599","600","601","602","603","604","605","606","607","608","609","610","611","612","613","614","615","616","617","618","619","620","621","622","623","624","625","626","627","628","629","630","631","632","633","634","635","636","637","638","639","640","641","642","643","644","645","646","647","648","649","650","651","652","653","654","655","656","657","658","659","660","661","662","663","664","665","666","667","668","669","670","671","672","673","674","675","676","677","678","679","680","681","682","683","684","685","686","687","688","689","690","691","692","693","694","695","696","697","698","699","700","701","702","703","704","705","706","707","708","709","710","711","712","713","714","715","716","717","718","719","720","721","722","723","724","725","726","727","728","729","730","731","732","733","734","735","736","737","738","739","740","741","742","743","744","745","746","747","748","749","750","751","752","753","754","755","756","757","758","759","760","761","762","763","764","765","766","767","768","769","770","771","772","773","774","775","776","777","778","779","780","781","782","783","784","785","786","787","788","789","790","791","792","793","794","795","796","797","798","799","800","801","802","803","804","805","806","807","808","809","810","811","812","813","814","815","816","817","818","819","820","821","822","823","824","825","826","827","828","829","830","831","832","833","834","835","836","837","838","839","840","841","842","843","844","845","846","847","848","849","850","851","852","853","854","855","856","857","858","859","860","861","862","863","864","865","866","867","868","869","870","871","872","873","874","875","876","877","878","879","880","881","882","883","884","885","886","887","888","889","890","891","892","893","894","895","896","897","898","899","900","901","902","903","904","905","906","907","908","909","910","911","912","913","914","915","916","917","918","919","920","921","922","923","924","925","926","927","928","929","930","931","932","933","934","935","936","937","938","939","940","941","942","943","944","945","946","947","948","949","950","951","952","953","954","955","956","957","958","959","960","961","962","963","964","965","966","967","968","969","970","971","972","973","974","975","976"],["AEDAUD","AEDCAD","AEDCHF","AEDEUR","AEDGBP","AEDINR","AEDJPY","AEDNOK","AEDNZD","AEDPKR","AEDSAR","AEDSEK","AEDUSD","AEDZAR","ANG","ARS","ARSBRL","ARSEUR","ARSGBP","ARSJPY","ARSUSD","AUD","AUDAED","AUDARS","AUDBRL","AUDCAD","AUDCHF","AUDCNH","AUDCNY","AUDCZK","AUDDKK","AUDEUR","AUDFJD","AUDGBP","AUDHKD","AUDHUF","AUDIDR","AUDILS","AUDINR","AUDJPY","AUDKRW","AUDMXN","AUDMYR","AUDNOK","AUDNZD","AUDPHP","AUDPKR","AUDPLN","AUDSEK","AUDSGD","AUDTHB","AUDTRY","AUDTWD","AUDUSD","AUDZAR","BDTGBP","BDTJPY","BGNUSD","BHDEUR","BHDPKR","BHDUSD","BRL","BRLARS","BRLAUD","BRLCHF","BRLEUR","BRLHKD","BRLJPY","BRLKRW","BRLMXN","BRLRUB","BRLSEK","BRLSGD","BRLUSD","BRLZAR","BWPEUR","BWPUSD","BYNUSD","CAD","CADAED","CADARS","CADAUD","CADBRL","CADCHF","CADCNH","CADCNY","CADCZK","CADDKK","CADEUR","CADGBP","CADHKD","CADIDR","CADILS","CADINR","CADISK","CADJPY","CADKRW","CADKWD","CADMXN","CADMYR","CADNOK","CADNZD","CADPKR","CADPLN","CADRUB","CADSEK","CADSGD","CADTHB","CADTRY","CADTWD","CADUSD","CADZAR","CDFUSD","CHF","CHFAED","CHFARS","CHFAUD","CHFBRL","CHFBWP","CHFCAD","CHFCNY","CHFCZK","CHFDKK","CHFEUR","CHFGBP","CHFHKD","CHFHUF","CHFIDR","CHFILS","CHFINR","CHFISK","CHFJPY","CHFKRW","CHFMXN","CHFMYR","CHFNOK","CHFNZD","CHFPKR","CHFPLN","CHFRON","CHFRUB","CHFSEK","CHFSGD","CHFSZL","CHFTHB","CHFTRY","CHFTWD","CHFUSD","CHFUZS","CHFZAR","CLP","CLPEUR","CLPGBP","CLPUSD","CNHCNY","CNHHKD","CNHIDR","CNHINR","CNHJPY","CNHKRW","CNHPHP","CNHTHB","CNHTWD","CNHUSD","CNY","CNYAUD","CNYCAD","CNYCHF","CNYCNH","CNYEUR","CNYGBP","CNYHKD","CNYJPY","CNYNZD","CNYPLN","CNYRUB","CNYUSD","CNYZAR","COPUSD","CRCGBP","CZK","CZKCHF","CZKDKK","CZKEUR","CZKJPY","CZKPLN","CZKSEK","CZKUSD","DJFGBP","DKK","DKKAUD","DKKCAD","DKKCHF","DKKCZK","DKKEUR","DKKGBP","DKKHKD","DKKHUF","DKKINR","DKKISK","DKKJPY","DKKNOK","DKKNZD","DKKPKR","DKKPLN","DKKSEK","DKKSGD","DKKTHB","DKKUSD","DKKZAR","DOPGBP","DZDUSD","EGPEUR","EGPJPY","EGPPKR","EGPUSD","ETBGBP","EUR","EURAED","EURAFN","EURALL","EURAMD","EURARS","EURAUD","EURBAM","EURBBD","EURBDT","EURBGN","EURBHD","EURBIF","EURBND","EURBOB","EURBRL","EURBSD","EURBWP","EURBZD","EURCAD","EURCHF","EURCLP","EURCNH","EURCNY","EURCOP","EURCRC","EURCUP","EURCVE","EURCZK","EURDJF","EURDKK","EURDOP","EURDZD","EUREGP","EURETB","EUREUR","EURFJD","EURGBP","EURGHS","EURGNF","EURGTQ","EURHKD","EURHNL","EURHRK","EURHTG","EURHUF","EURIDR","EURILS","EURINR","EURIQD","EURISK","EURJMD","EURJOD","EURJPY","EURKES","EURKHR","EURKRW","EURKWD","EURKYD","EURKZT","EURLAK","EURLBP","EURLKR","EURLSL","EURLYD","EURMAD","EURMDL","EURMKD","EURMMK","EURMOP","EURMUR","EURMVR","EURMWK","EURMXN","EURMYR","EURNAD","EURNGN","EURNIO","EURNOK","EURNPR","EURNZD","EUROMR","EURPAB","EURPEN","EURPGK","EURPHP","EURPKR","EURPLN","EURPYG","EURQAR","EURRON","EURRSD","EURRUB","EURRWF","EURSAR","EURSCR","EURSEK","EURSGD","EURSOS","EURSVC","EURSZL","EURTHB","EURTND","EURTRY","EURTTD","EURTWD","EURTZS","EURUAH","EURUGX","EURUSD","EURUYU","EURUZS","EURVND","EURXAF","EURXOF","EURXPF","EURYER","EURZAR","FJDUSD","GBP","GBPAED","GBPALL","GBPARS","GBPAUD","GBPBDT","GBPBGN","GBPBHD","GBPBIF","GBPBMD","GBPBND","GBPBRL","GBPBWP","GBPCAD","GBPCHF","GBPCLP","GBPCNH","GBPCNY","GBPCOP","GBPCRC","GBPCZK","GBPDJF","GBPDKK","GBPDOP","GBPDZD","GBPEGP","GBPETB","GBPEUR","GBPFJD","GBPGBP","GBPGTQ","GBPHKD","GBPHNL","GBPHRK","GBPHTG","GBPHUF","GBPIDR","GBPILS","GBPINR","GBPIQD","GBPISK","GBPJMD","GBPJOD","GBPJPY","GBPKES","GBPKRW","GBPKWD","GBPLBP","GBPLKR","GBPMAD","GBPMUR","GBPMVR","GBPMWK","GBPMXN","GBPMYR","GBPNGN","GBPNIO","GBPNOK","GBPNZD","GBPOMR","GBPPEN","GBPPGK","GBPPHP","GBPPKR","GBPPLN","GBPQAR","GBPRON","GBPRUB","GBPSAR","GBPSCR","GBPSEK","GBPSGD","GBPSZL","GBPTHB","GBPTND","GBPTRY","GBPTTD","GBPTWD","GBPTZS","GBPUAH","GBPUGX","GBPUSD","GBPVND","GBPXAF","GBPXCD","GBPXPF","GBPZAR","GHSEUR","GHSUSD","HKD","HKDAUD","HKDBRL","HKDCAD","HKDCHF","HKDCNY","HKDDKK","HKDEUR","HKDGBP","HKDIDR","HKDINR","HKDJPY","HKDKRW","HKDMXN","HKDMYR","HKDNZD","HKDPKR","HKDPLN","HKDRUB","HKDSEK","HKDSGD","HKDTHB","HKDTWD","HKDUSD","HKDZAR","HRKEUR","HRKUSD","HUF","HUFCHF","HUFDKK","HUFEUR","HUFUSD","IDR","IDRAUD","IDRCAD","IDRCHF","IDRCNY","IDREUR","IDRGBP","IDRINR","IDRJPY","IDRKRW","IDRMYR","IDRNZD","IDRSGD","IDRTHB","IDRTWD","IDRUSD","IDRZAR","ILS","ILSCHF","ILSEUR","ILSGBP","ILSJPY","ILSPLN","ILSRUB","ILSUSD","INR","INRAUD","INRCAD","INRCHF","INRCNY","INREUR","INRGBP","INRHKD","INRJPY","INRKRW","INRMYR","INRNZD","INRPKR","INRTHB","INRTWD","INRUSD","INRZAR","ISK","ISKCHF","ISKDKK","ISKEUR","ISKGBP","JMDGBP","JODUSD","JPY","JPYAED","JPYARS","JPYAUD","JPYBRL","JPYCAD","JPYCHF","JPYCLP","JPYCNY","JPYCZK","JPYDKK","JPYEUR","JPYGBP","JPYHKD","JPYIDR","JPYILS","JPYINR","JPYISK","JPYKRW","JPYMXN","JPYMYR","JPYNOK","JPYNZD","JPYPKR","JPYPLN","JPYRUB","JPYSEK","JPYTHB","JPYTWD","JPYUSD","JPYZAR","KESEUR","KESUSD","KESZAR","KGSRUB","KRW","KRWAUD","KRWBRL","KRWCAD","KRWCHF","KRWCNY","KRWEUR","KRWGBP","KRWHKD","KRWIDR","KRWINR","KRWJPY","KRWMYR","KRWNZD","KRWSEK","KRWSGD","KRWTHB","KRWTWD","KRWUSD","KRWZAR","KWDGBP","KWDPKR","KWDUSD","KZTGBP","LBPUSD","LKR","LKREUR","LKRUSD","LRDUSD","MADGBP","MADUSD","MDLUSD","MKDUSD","MUREUR","MURGBP","MURUSD","MVRUSD","MWKGBP","MXN","MXNAUD","MXNBRL","MXNCAD","MXNCHF","MXNDKK","MXNEUR","MXNGBP","MXNHKD","MXNJPY","MXNSGD","MXNUSD","MXNZAR","MXV","MYR","MYRAUD","MYRCAD","MYRCHF","MYRCNH","MYRCNY","MYREUR","MYRGBP","MYRHKD","MYRIDR","MYRINR","MYRJPY","MYRKRW","MYRNZD","MYRSGD","MYRTHB","MYRTWD","MYRUSD","MYRZAR","NGN","NGNGBP","NGNJPY","NGNUSD","NOK","NOKCAD","NOKCHF","NOKCNH","NOKDKK","NOKEUR","NOKGBP","NOKISK","NOKJPY","NOKPLN","NOKSEK","NOKUSD","NOKZAR","NZD","NZDAED","NZDAUD","NZDCAD","NZDCHF","NZDCNH","NZDCNY","NZDCZK","NZDDKK","NZDEUR","NZDGBP","NZDHKD","NZDHUF","NZDIDR","NZDINR","NZDJPY","NZDKRW","NZDMXN","NZDMYR","NZDNOK","NZDPHP","NZDPKR","NZDPLN","NZDSEK","NZDSGD","NZDTHB","NZDTRY","NZDTWD","NZDUSD","NZDZAR","OMRAED","OMRGBP","OMRPKR","OMRUSD","PEN","PENGBP","PGKGBP","PHP","PHPAUD","PHPEUR","PHPGBP","PHPJPY","PHPNZD","PHPUSD","PKR","PKREUR","PKRGBP","PKRJPY","PKRZAR","PLN","PLNCHF","PLNCZK","PLNDKK","PLNEUR","PLNHUF","PLNILS","PLNJPY","PLNRON","PLNRUB","PLNSEK","PLNUSD","QARAED","QARGBP","QARPKR","QARUSD","RON","RONEUR","RONGBP","RONUSD","RSDUSD","RUB","RUBCHF","RUBEUR","RUBGBP","RUBILS","RUBJPY","RUBPLN","RUBUSD","SAR","SAREUR","SARPKR","SARUSD","SCRGBP","SCRUSD","SEK","SEKAUD","SEKCAD","SEKCHF","SEKCNH","SEKCZK","SEKDKK","SEKEUR","SEKGBP","SEKILS","SEKINR","SEKISK","SEKJPY","SEKNOK","SEKPLN","SEKUSD","SEKZAR","SGD","SGDARS","SGDAUD","SGDBRL","SGDCHF","SGDCNH","SGDCNY","SGDDKK","SGDEUR","SGDGBP","SGDHKD","SGDIDR","SGDINR","SGDJPY","SGDKRW","SGDMXN","SGDMYR","SGDNZD","SGDPKR","SGDPLN","SGDSEK","SGDTHB","SGDTWD","SGDUSD","SGDVND","SGDZAR","SLLUSD","SZLGBP","SZLUSD","THB","THBAUD","THBCAD","THBCHF","THBCNY","THBEUR","THBGBP","THBHKD","THBIDR","THBINR","THBJPY","THBKRW","THBMYR","THBNZD","THBPKR","THBSGD","THBTWD","THBUSD","THBZAR","TNDGBP","TNDUSD","TOP","TRY","TRYCHF","TRYDKK","TRYEUR","TRYJPY","TRYPLN","TRYUSD","TRYZAR","TTDGBP","TTDUSD","TWD","TWDAUD","TWDCAD","TWDCHF","TWDCNY","TWDEUR","TWDGBP","TWDHKD","TWDIDR","TWDINR","TWDJPY","TWDKRW","TWDMYR","TWDNZD","TWDPKR","TWDSEK","TWDSGD","TWDTHB","TWDUSD","TWDZAR","UAHUSD","USD","USDAED","USDAFN","USDALL","USDAMD","USDARS","USDAUD","USDBDT","USDBGN","USDBHD","USDBIF","USDBMD","USDBND","USDBOB","USDBRL","USDBWP","USDBYN","USDBZD","USDCAD","USDCDF","USDCHF","USDCLP","USDCNH","USDCNY","USDCOP","USDCRC","USDCUP","USDCVE","USDCZK","USDDJF","USDDKK","USDDOP","USDDZD","USDEGP","USDETB","USDEUR","USDFJD","USDGBP","USDGEL","USDGHS","USDGMD","USDGNF","USDGTQ","USDHKD","USDHNL","USDHRK","USDHTG","USDHUF","USDIDR","USDILS","USDINR","USDIQD","USDISK","USDJOD","USDJPY","USDKES","USDKGS","USDKHR","USDKMF","USDKRW","USDKWD","USDKZT","USDLAK","USDLBP","USDLKR","USDLRD","USDLSL","USDLYD","USDMAD","USDMDL","USDMKD","USDMMK","USDMOP","USDMUR","USDMVR","USDMWK","USDMXN","USDMYR","USDNAD","USDNGN","USDNIO","USDNOK","USDNPR","USDNZD","USDOMR","USDPAB","USDPEN","USDPGK","USDPHP","USDPKR","USDPLN","USDPYG","USDQAR","USDRON","USDRSD","USDRUB","USDRWF","USDSAR","USDSCR","USDSEK","USDSGD","USDSLL","USDSOS","USDSVC","USDSZL","USDTHB","USDTND","USDTOP","USDTRY","USDTWD","USDTZS","USDUAH","USDUSD","USDUYU","USDUZS","USDVND","USDXAF","USDXOF","USDXPF","USDYER","USDZAR","UYU","UYUUSD","UZSRUB","VND","VNDEUR","VNDJPY","XAGUSD","XAUUSD","XCDGBP","XDR","XPDUSD","XPTUSD","YERUSD","ZAC","ZAR","ZARAED","ZARAUD","ZARBRL","ZARBWP","ZARCAD","ZARCHF","ZARCNY","ZARDKK","ZAREUR","ZARGBP","ZARHKD","ZARIDR","ZARINR","ZARJPY","ZARKES","ZARKRW","ZARMXN","ZARNOK","ZARNZD","ZARPHP","ZARPKR","ZARPLN","ZARRUB","ZARSEK","ZARSGD","ZARTHB","ZARTWD","ZARUSD"],["AEDAUD","AEDCAD","AEDCHF","UAE Dirham/Euro FX Cross Rate","AEDGBP","UAE Dirham/Indian Rupee FX Cross Rate","UAE Dirham/Japanese Yen FX Cross Rate","UAE Dirham/Norwegian Krone FX Cross Rate","AEDNZD","UAE Dirham/Pakistani Rupee FX Cross Rate","UAE Dirham/Saudi Arabian Riyal FX Cross Rate","UAE Dirham/Swedish Krona FX Cross Rate","UAE Dirham/US Dollar FX Spot Rate","UAE Dirham/South African Rand FX Cross Rate","ANG","USDARS","Argentine Peso/Brazilian Real FX Cross Rate","ARSEUR","Argentine Peso/UK Pound Sterling FX Cross Rate","Argentine Peso/Japanese Yen FX Cross Rate","Argentine Peso/US Dollar FX Cross Rate","US Dollar/Australian Dollar FX Cross Rate","Australian Dollar/UAE Dirham FX Cross Rate","Australian Dollar/Argentine Peso FX Cross Rate","Australian Dollar/Brazilian Real FX Cross Rate","Australian Dollar/Canadian Dollar FX Cross Rate","Australian Dollar/Swiss Franc FX Cross Rate","AUDCNH","AUDCNY","Australian Dollar/Czech Koruna FX Cross Rate","Australian Dollar/Danish Krone FX Cross Rate","Australian Dollar/Euro FX Cross Rate","Australian Dollar/Fiji Dollar FX Cross Rate","Australian Dollar/UK Pound Sterling FX Cross Rate","Australian Dollar/Hong Kong Dollar FX Cross Rate","Australian Dollar/Hungarian Forint FX Cross Rate","Australian Dollar/Indonesian Rupiah FX Cross Rate","Australian Dollar/Israeli Shekel FX Cross Rate","Australian Dollar/Indian Rupee FX Cross Rate","Australian Dollar/Japanese Yen FX Cross Rate","Australian Dollar/Korean Won FX Cross Rate","Australian Dollar/Mexican Peso FX Cross Rate","Australian Dollar/Malaysian Ringgit FX Cross Rate","Australian Dollar/Norwegian Krone FX Cross Rate","Australian Dollar/New Zealand Dollar FX Cross Rate","Australian Dollar/Philippine Peso FX Cross Rate","Australian Dollar/Pakistani Rupee FX Cross Rate","Australian Dollar/Polish Zloty FX Cross Rate","Australian Dollar/Swedish Krona FX Cross Rate","Australian Dollar/Singapore Dollar FX Cross Rate","Australian Dollar/Thai Baht FX Cross Rate","Australian Dollar/Turkish Lira FX Cross Rate","Australian Dollar/Taiwan Dollar FX Cross Rate","Australian Dollar/US Dollar FX Spot Rate","AUDZAR","BDTGBP","BDTJPY","BGNUSD","BHDEUR","BHDPKR","BHDUSD","US Dollar/Brazilian Real FX Spot Rate","Brazilian Real/Argentine Peso FX Cross Rate","BRLAUD","BRLCHF","Brazilian Real/Euro FX Cross Rate","Brazilian Real/Hong Kong Dollar FX Cross Rate","Brazilian Real/Japanese Yen FX Cross Rate","BRLKRW","Brazilian Real/Mexican Peso FX Cross Rate","Brazilian Real/Russian Rouble FX Cross Rate","BRLSEK","Brazilian Real/Singapore Dollar FX Cross Rate","Brazilian Real/US Dollar FX Cross Rate","Brazilian Real/South African Rand FX Cross Rate","BWPEUR","BWPUSD","Belarusian Ruble US Dollar","US Dollar/Canadian Dollar FX Spot Rate","Canadian Dollar/UAE Dirham FX Cross Rate","Canadian Dollar/Argentine Peso FX Cross Rate","Canadian Dollar/Australian Dollar FX Cross Rate","Canadian Dollar/Brazilian Real FX Cross Rate","Canadian Dollar/Swiss Franc FX Cross Rate","CADCNH","CADCNY","Canadian Dollar Czech Koruna","Canadian Dollar/Danish Krone FX Cross Rate","Canadian Dollar/Euro FX Cross Rate","Canadian Dollar/UK Pound Sterling FX Cross Rate","Canadian Dollar/Hong Kong Dollar FX Cross Rate","Canadian Dollar/Indonesian Rupiah FX Cross Rate","Canadian Dollar/Israeli Shekel FX Cross Rate","Canadian Dollar/Indian Rupee FX Cross Rate","CADISK","Canadian Dollar/Japanese Yen FX Cross Rate","Canadian Dollar/Korean Won FX Cross Rate","Canadian Dollar/Kuwaiti Dinar FX Cross Rate","Canadian Dollar/Mexican Peso FX Cross Rate","Canadian Dollar/Malaysian Ringgit FX Cross Rate","Canadian Dollar/Norwegian Krone FX Cross Rate","Canadian Dollar/New Zealand Dollar FX Cross Rate","Canadian Dollar/Pakistani Rupee FX Cross Rate","Canadian Dollar/Polish Zloty FX Cross Rate","Canadian Dollar/Russian Rouble FX Cross Rate","Canadian Dollar/Swedish Krona FX Cross Rate","Canadian Dollar/Singapore Dollar FX Cross Rate","Canadian Dollar/Thai Baht FX Cross Rate","Canadian Dollar/Turkish Lira FX Cross Rate","Canadian Dollar/Taiwan Dollar FX Cross Rate","CADUSD","Canadian Dollar/South African Rand FX Cross Rate","CDFUSD","US Dollar/Swiss Franc FX Spot Rate","Swiss Franc/UAE Dirham FX Cross Rate","Swiss Franc/Argentine Peso FX Cross Rate","Swiss Franc/Australian Dollar FX Cross Rate","Swiss Franc/Brazilian Real FX Cross Rate","CHFBWP","Swiss Franc/Canadian Dollar FX Cross Rate","Swiss Franc/Chinese Renminbi FX Cross Rate","Swiss Franc/Czech Koruna FX Cross Rate","Swiss Franc/Danish Krone FX Cross Rate","Swiss Franc/Euro FX Cross Rate","Swiss Franc/UK Pound Sterling FX Cross Rate","Swiss Franc/Hong Kong Dollar FX Cross Rate","Swiss Franc/Hungarian Forint FX Cross Rate","Swiss Franc/Indonesian Rupiah FX Cross Rate","CHFILS","Swiss Franc/Indian Rupee FX Cross Rate","CHFISK","Swiss Franc/Japanese Yen FX Cross Rate","Swiss Franc/Korean Won FX Cross Rate","Swiss Franc/Mexican Peso FX Cross Rate","Swiss Franc/Malaysian Ringgit FX Cross Rate","Swiss Franc/Norwegian Krone FX Cross Rate","Swiss Franc/New Zealand Dollar FX Cross Rate","CHFPKR","Swiss Franc/Polish Zloty FX Cross Rate","CHFRON","Swiss Franc/Russian Rouble FX Cross Rate","Swiss Franc/Swedish Krona FX Cross Rate","Swiss Franc/Singapore Dollar FX Cross Rate","CHFSZL","Swiss Franc/Thai Baht FX Cross Rate","Swiss Franc/Turkish Lira FX Cross Rate","Swiss Franc/Taiwan Dollar FX Cross Rate","CHFUSD","CHFUZS","Swiss Franc/South African Rand FX Cross Rate","US Dollar/Chilean Peso FX Spot Rate","CLPEUR","CLPGBP","Chilean Peso US Dollar","Chinese Yuan Offshore / Chinese Yuan","CNHHKD","CNHIDR","CNHINR","CNHJPY","CNHKRW","CNHPHP","CNHTHB","CNHTWD","Chinese Yuan Offshore / US Dollar","US Dollar/Chinese Renminbi FX Spot Rate","Chinese Renminbi/Australian Dollar FX Cross Rate","CNYCAD","Chinese Renminbi/Swiss Franc FX Cross Rate","Chinese Yuan / Chinese Yuan Offshore","Chinese Renminbi/Euro FX Cross Rate","Chinese Renminbi/UK Pound Sterling FX Cross Rate","Chinese Renminbi/Hong Kong Dollar FX Cross Rate","Chinese Renminbi/Japanese Yen FX Cross Rate","Chinese Renminbi/New Zealand Dollar FX Cross Rate","CNYPLN","Chinese Yuan Russian Ruble","Chinese Renminbi/US Dollar FX Cross Rate","CNYZAR","Colombian Peso US Dollar","CRCGBP","US Dollar/Czech Koruna FX Spot Rate","CZKCHF","Czech Koruna/Danish Krone FX Cross Rate","Czech Koruna/Euro FX Cross Rate","Czech Koruna/Japanese Yen FX Cross Rate","Czech Koruna/Polish Zloty FX Cross Rate","Czech Koruna/Swedish Krona FX Cross Rate","Czech Koruna/US Dollar FX Cross Rate","DJFGBP","US Dollar/Danish Krone FX Spot Rate","Danish Krone/Australian Dollar FX Cross Rate","Danish Krone/Canadian Dollar FX Cross Rate","Danish Krone/Swiss Franc FX Cross Rate","Danish Krone/Czech Koruna FX Cross Rate","Danish Krone/Euro FX Cross Rate","Danish Krone/UK Pound Sterling FX Cross Rate","Danish Krone/Hong Kong Dollar FX Cross Rate","DKKHUF","Danish Krone/Indian Rupee FX Cross Rate","DKKISK","Danish Krone/Japanese Yen FX Cross Rate","Danish Krone/Norwegian Krone FX Cross Rate","DKKNZD","Danish Krone/Pakistani Rupee FX Cross Rate","Danish Krone/Polish Zloty FX Cross Rate","Danish Krone/Swedish Krona FX Cross Rate","Danish Krone/Singapore Dollar FX Cross Rate","Danish Krone/Thai Baht FX Cross Rate","Danish Krone/US Dollar FX Cross Rate","DKKZAR","DOPGBP","DZDUSD","EGPEUR","EGPJPY","EGPPKR","EGPUSD","ETBGBP","US Dollar/Euro FX Cross Rate","Euro/UAE Dirham FX Cross Rate","EURAFN","EURALL","EURAMD","Euro/Argentine Peso FX Cross Rate","Euro/Australian Dollar FX Cross Rate","EURBAM","EURBBD","EURBDT","EURBGN","Euro/Bahraini Dinar FX Cross Rate","EURBIF","Euro/Brunei Dollar FX Cross Rate","EURBOB","Euro/Brazilian Real FX Cross Rate","EURBSD","EURBWP","EURBZD","Euro/Canadian Dollar FX Cross Rate","EURCHF","Euro/Chilean Peso FX Cross Rate","EURCNH","Euro/Chinese Renminbi FX Cross Rate","EURCOP","EURCRC","EURCUP","EURCVE","EURCZK","EURDJF","Euro/Danish Krone FX Cross Rate","EURDOP","EURDZD","Euro/Egyptian Pound FX Cross Rate","EURETB","EUREUR","Euro/Fiji Dollar FX Cross Rate","Euro/UK Pound Sterling FX Cross Rate","Euro/Ghanian Cedi FX Cross Rate","EURGNF","EURGTQ","Euro/Hong Kong Dollar FX Cross Rate","EURHNL","EURHRK","EURHTG","Euro/Hungarian Forint FX Cross Rate","Euro/Indonesian Rupiah FX Cross Rate","Euro/Israeli Shekel FX Cross Rate","Euro/Indian Rupee FX Cross Rate","EURIQD","EURISK","EURJMD","EURJOD","Euro/Japanese Yen FX Cross Rate","Euro/Kenyan Shilling FX Cross Rate","EURKHR","Euro/Korean Won FX Cross Rate","Euro/Kuwaiti Dinar FX Cross Rate","Euro Cayman Islands Dollar","EURKZT","EURLAK","EURLBP","Euro/Sri Lanka Rupee FX Cross Rate","EURLSL","EURLYD","Euro/Moroccan Dirham FX Cross Rate","EURMDL","EURMKD","EURMMK","EURMOP","EURMUR","EURMVR","EURMWK","Euro/Mexican Peso FX Cross Rate","Euro/Malaysian Ringgit FX Cross Rate","EURNAD","Euro/Nigerian Naira FX Cross Rate","EURNIO","Euro/Norwegian Krone FX Cross Rate","EURNPR","Euro/New Zealand Dollar FX Cross Rate","Euro/Omani Rial FX Cross Rate","EURPAB","Euro/Peruvian Sol FX Cross Rate","EURPGK","Euro/Philippine Peso FX Cross Rate","Euro/Pakistani Rupee FX Cross Rate","Euro/Polish Zloty FX Cross Rate","EURPYG","EURQAR","EURRON","EURRSD","Euro/Russian Rouble FX Cross Rate","EURRWF","Euro/Saudi Arabian Riyal FX Cross Rate","Euro/Seychelles Rupee FX Cross Rate","Euro/Swedish Krona FX Cross Rate","Euro/Singapore Dollar FX Cross Rate","EURSOS","EURSVC","EURSZL","Euro/Thai Baht FX Cross Rate","EURTND","Euro/Turkish Lira FX Cross Rate","EURTTD","Euro/Taiwan Dollar FX Cross Rate","EURTZS","Euro/Ukraine Hryvnia FX Cross Rate","EURUGX","EURUSD","EURUYU","EURUZS","Euro/Vietnam Dong FX Cross Rate","EURXAF","EURXOF","EURXPF","EURYER","Euro/South African Rand FX Cross Rate","Fiji Dollar/US Dollar FX Spot Rate","US Dollar/UK Pound Sterling FX Cross Rate","UK Pound Sterling/UAE Dirham FX Cross Rate","GBPALL","UK Pound Sterling/Argentine Peso FX Cross Rate","UK Pound Sterling/Australian Dollar FX Cross Rate","GBPBDT","GBPBGN","UK Pound Sterling/Bahraini Dinar FX Cross Rate","GBPBIF","GBPBMD","GBPBND","UK Pound Sterling/Brazilian Real FX Cross Rate","GBPBWP","UK Pound Sterling/Canadian Dollar FX Cross Rate","UK Pound Sterling/Swiss Franc FX Cross Rate","UK Pound Sterling/Chilean Peso FX Cross Rate","GBPCNH","UK Pound Sterling/Chinese Renminbi FX Cross Rate","GBPCOP","GBPCRC","UK Pound Sterling/Czech Koruna FX Cross Rate","GBPDJF","UK Pound Sterling/Danish Krone FX Cross Rate","GBPDOP","GBPDZD","UK Pound Sterling/Egyptian Pound FX Cross Rate","GBPETB","UK Pound Sterling/Euro FX Cross Rate","UK Pound Sterling/Fiji Dollar FX Cross Rate","GBPGBP","GBPGTQ","UK Pound Sterling/Hong Kong Dollar FX Cross Rate","GBPHNL","GBPHRK","GBPHTG","UK Pound Sterling/Hungarian Forint FX Cross Rate","UK Pound Sterling/Indonesian Rupiah FX Cross Rate","UK Pound Sterling/Israeli Shekel FX Cross Rate","UK Pound Sterling/Indian Rupee FX Cross Rate","GBPIQD","GBPISK","GBPJMD","GBPJOD","UK Pound Sterling/Japanese Yen FX Cross Rate","UK Pound Sterling/Kenyan Shilling FX Cross Rate","UK Pound Sterling/Korean Won FX Cross Rate","UK Pound Sterling/Kuwaiti Dinar FX Cross Rate","GBPLBP","UK Pound Sterling/Sri Lanka Rupee FX Cross Rate","UK Pound Sterling/Moroccan Dirham FX Cross Rate","GBPMUR","GBPMVR","GBPMWK","UK Pound Sterling/Mexican Peso FX Cross Rate","UK Pound Sterling/Malaysian Ringgit FX Cross Rate","UK Pound Sterling/Nigerian Naira FX Cross Rate","GBPNIO","UK Pound Sterling/Norwegian Krone FX Cross Rate","UK Pound Sterling/New Zealand Dollar FX Cross Rate","UK Pound Sterling/Omani Rial FX Cross Rate","GBPPEN","UK Pound Sterling/Papua New Guinea Kina FX Cross Rate","UK Pound Sterling/Philippine Peso FX Cross Rate","UK Pound Sterling/Pakistani Rupee FX Cross Rate","UK Pound Sterling/Polish Zloty FX Cross Rate","GBPQAR","GBPRON","UK Pound Sterling/Russian Rouble FX Cross Rate","UK Pound Sterling/Saudi Arabian Riyal FX Cross Rate","GBPSCR","UK Pound Sterling/Swedish Krona FX Cross Rate","UK Pound Sterling/Singapore Dollar FX Cross Rate","GBPSZL","UK Pound Sterling/Thai Baht FX Cross Rate","GBPTND","UK Pound Sterling/Turkish Lira FX Cross Rate","GBPTTD","UK Pound Sterling/Taiwan Dollar FX Cross Rate","GBPTZS","UK Pound Sterling/Ukraine Hryvnia FX Cross Rate","GBPUGX","UK Pound Sterling/US Dollar FX Spot Rate","UK Pound Sterling/Vietnam Dong FX Cross Rate","GBPXAF","GBPXCD","GBPXPF","UK Pound Sterling/South African Rand FX Cross Rate","GHSEUR","GHSUSD","US Dollar/Hong Kong Dollar FX Spot Rate","Hong Kong Dollar/Australian Dollar FX Cross Rate","Hong Kong Dollar/Brazilian Real FX Cross Rate","HKDCAD","Hong Kong Dollar/Swiss Franc FX Cross Rate","Hong Kong Dollar/Chinese Renminbi FX Cross Rate","Hong Kong Dollar/Danish Krone FX Cross Rate","Hong Kong Dollar/Euro FX Cross Rate","Hong Kong Dollar/UK Pound Sterling FX Cross Rate","HKDIDR","HKDINR","HKDJPY","HKDKRW","Hong Kong Dollar/Mexican Peso FX Cross Rate","Hong Kong Dollar/Malaysian Ringgit FX Cross Rate","Hong Kong Dollar/New Zealand Dollar FX Cross Rate","Hong Kong Dollar/Pakistani Rupee FX Cross Rate","Hong Kong Dollar/Polish Zloty FX Cross Rate","Hong Kong Dollar Russian Ruble","Hong Kong Dollar/Swedish Krona FX Cross Rate","Hong Kong Dollar/Singapore Dollar FX Cross Rate","Hong Kong Dollar/Thai Baht FX Cross Rate","Hong Kong Dollar/Taiwan Dollar FX Cross Rate","Hong Kong Dollar/US Dollar FX Cross Rate","Hong Kong Dollar/South African Rand FX Cross Rate","HRKEUR","HRKUSD","US Dollar/Hungarian Forint FX Spot Rate","Hungarian Forint/Swiss Franc FX Cross Rate","Hungarian Forint/Danish Krone FX Cross Rate","Hungarian Forint/Euro FX Cross Rate","HUFUSD","US Dollar/Indonesian Rupiah FX Spot Rate","Indonesian Rupiah/Australian Dollar FX Cross Rate","Indonesian Rupiah/Canadian Dollar FX Cross Rate","Indonesian Rupiah/Swiss Franc FX Cross Rate","IDRCNY","Indonesian Rupiah/Euro FX Cross Rate","Indonesian Rupiah/UK Pound Sterling FX Cross Rate","Indonesian Rupiah/Indian Rupee FX Cross Rate","Indonesian Rupiah/Japanese Yen FX Cross Rate","Indonesian Rupiah/Korean Won FX Cross Rate","Indonesian Rupiah/Malaysian Ringgit FX Cross Rate","Indonesian Rupiah/New Zealand Dollar FX Cross Rate","Indonesian Rupiah/Singapore Dollar FX Cross Rate","Indonesian Rupiah/Thai Baht FX Cross Rate","Indonesian Rupiah/Taiwan Dollar FX Cross Rate","IDRUSD","IDRZAR","US Dollar/Israeli Shekel FX Spot Rate","ILSCHF","ILSEUR","ILSGBP","ILSJPY","Israeli Shekel/Polish Zloty FX Cross Rate","ILSRUB","ILSUSD","US Dollar/Indian Rupee FX Spot Rate","INRAUD","Indian Rupee/Canadian Dollar FX Cross Rate","Indian Rupee/Swiss Franc FX Cross Rate","Indian Rupee/Chinese Renminbi FX Cross Rate","Indian Rupee/Euro FX Cross Rate","Indian Rupee/UK Pound Sterling FX Cross Rate","Indian Rupee/Hong Kong Dollar FX Cross Rate","Indian Rupee/Japanese Yen FX Cross Rate","INRKRW","Indian Rupee/Malaysian Ringgit FX Cross Rate","Indian Rupee/New Zealand Dollar FX Cross Rate","Indian Rupee/Pakistani Rupee FX Cross Rate","Indian Rupee/Thai Baht FX Cross Rate","Indian Rupee/Taiwan Dollar FX Cross Rate","Indian Rupee/US Dollar FX Cross Rate","Indian Rupee/South African Rand FX Cross Rate","ISK","ISKCHF","ISKDKK","ISKEUR","ISKGBP","JMDGBP","JODUSD","US Dollar/Japanese Yen FX Spot Rate","JPYAED","Japanese Yen/Argentine Peso FX Cross Rate","Japanese Yen/Australian Dollar FX Cross Rate","Japanese Yen/Brazilian Real FX Cross Rate","Japanese Yen/Canadian Dollar FX Cross Rate","Japanese Yen/Swiss Franc FX Cross Rate","JPYCLP","JPYCNY","JPYCZK","Japanese Yen/Danish Krone FX Cross Rate","Japanese Yen/Euro FX Cross Rate","Japanese Yen/UK Pound Sterling FX Cross Rate","Japanese Yen/Hong Kong Dollar FX Cross Rate","Japanese Yen/Indonesian Rupiah FX Cross Rate","JPYILS","Japanese Yen/Indian Rupee FX Cross Rate","JPYISK","Japanese Yen/Korean Won FX Cross Rate","Japanese Yen/Mexican Peso FX Cross Rate","Japanese Yen/Malaysian Ringgit FX Cross Rate","Japanese Yen/Norwegian Krone FX Cross Rate","Japanese Yen/New Zealand Dollar FX Cross Rate","JPYPKR","Japanese Yen/Polish Zloty FX Cross Rate","Japanese Yen/Russian Rouble FX Cross Rate","Japanese Yen/Swedish Krona FX Cross Rate","Japanese Yen/Thai Baht FX Cross Rate","Japanese Yen/Taiwan Dollar FX Cross Rate","Japanese Yen/US Dollar FX Cross Rate","Japanese Yen/South African Rand FX Cross Rate","KESEUR","KESUSD","KESZAR","Kyrgyzstan som/Russian Ruble","US Dollar/Korean Won FX Spot Rate","KRWAUD","KRWBRL","Korean Won/Canadian Dollar FX Cross Rate","KRWCHF","KRWCNY","Korean Won/Euro FX Cross Rate","KRWGBP","KRWHKD","Korean Won/Indonesian Rupiah FX Cross Rate","KRWINR","Korean Won/Japanese Yen FX Cross Rate","Korean Won/Malaysian Ringgit FX Cross Rate","KRWNZD","Korean Won/Swedish Krona FX Cross Rate","Korean Won/Singapore Dollar FX Cross Rate","KRWTHB","Korean Won/Taiwan Dollar FX Cross Rate","KRWUSD","KRWZAR","KWDGBP","KWDPKR","Kuwaiti Dinar/US Dollar FX Cross Rate","KZTGBP","LBPUSD","LKR","LKREUR","LKRUSD","LRDUSD","MADGBP","MADUSD","MDLUSD","MKDUSD","MUREUR","MURGBP","MURUSD","MVRUSD","MWKGBP","US Dollar/Mexican Peso FX Spot Rate","Mexican Peso/Australian Dollar FX Cross Rate","Mexican Peso/Brazilian Real FX Cross Rate","Mexican Peso/Canadian Dollar FX Cross Rate","Mexican Peso/Swiss Franc FX Cross Rate","Mexican Peso/Danish Krone FX Cross Rate","Mexican Peso/Euro FX Cross Rate","Mexican Peso/UK Pound Sterling FX Cross Rate","Mexican Peso/Hong Kong Dollar FX Cross Rate","Mexican Peso/Japanese Yen FX Cross Rate","Mexican Peso/Singapore Dollar FX Cross Rate","Mexican Peso/US Dollar FX Cross Rate","Mexican Peso/South African Rand FX Cross Rate","MXV","US Dollar/Malaysian Ringgit FX Spot Rate","Malaysian Ringgit/Australian Dollar FX Cross Rate","Malaysian Ringgit/Canadian Dollar FX Cross Rate","Malaysian Ringgit/Swiss Franc FX Cross Rate","MYRCNH","MYRCNY","Malaysian Ringgit/Euro FX Cross Rate","MYRGBP","Malaysian Ringgit/Hong Kong Dollar FX Cross Rate","Malaysian Ringgit/Indonesian Rupiah FX Cross Rate","Malaysian Ringgit/Indian Rupee FX Cross Rate","Malaysian Ringgit/Japanese Yen FX Cross Rate","MYRKRW","Malaysian Ringgit/New Zealand Dollar FX Cross Rate","MYRSGD","Malaysian Ringgit/Thai Baht FX Cross Rate","Malaysian Ringgit/Taiwan Dollar FX Cross Rate","MYRUSD","MYRZAR","US Dollar/Nigerian Naira FX Spot Rate","NGNGBP","NGNJPY","Nigerian Naira / US Dollar","US Dollar/Norwegian Krone FX Spot Rate","Norwegian Krone/Canadian Dollar FX Cross Rate","Norwegian Krone/Swiss Franc FX Cross Rate","NOKCNH","Norwegian Krone/Danish Krone FX Cross Rate","Norwegian Krone/Euro FX Cross Rate","Norwegian Krone/UK Pound Sterling FX Cross Rate","NOKISK","Norwegian Krone/Japanese Yen FX Cross Rate","Norwegian Krone/Polish Zloty FX Cross Rate","Norwegian Krone/Swedish Krona FX Cross Rate","Norwegian Krone/US Dollar FX Cross Rate","NOKZAR","US Dollar/New Zealand Dollar FX Cross Rate","New Zealand Dollar/UAE Dirham FX Cross Rate","New Zealand Dollar/Australian Dollar FX Cross Rate","New Zealand Dollar/Canadian Dollar FX Cross Rate","New Zealand Dollar/Swiss Franc FX Cross Rate","NZDCNH","New Zealand Dollar/Chinese Renminbi FX Cross Rate","NZDCZK","New Zealand Dollar/Danish Krone FX Cross Rate","New Zealand Dollar/Euro FX Cross Rate","New Zealand Dollar/UK Pound Sterling FX Cross Rate","New Zealand Dollar/Hong Kong Dollar FX Cross Rate","New Zealand Dollar/Hungarian Forint FX Cross Rate","New Zealand Dollar/Indonesian Rupiah FX Cross Rate","New Zealand Dollar/Indian Rupee FX Cross Rate","New Zealand Dollar/Japanese Yen FX Cross Rate","New Zealand Dollar/Korean Won FX Cross Rate","New Zealand Dollar/Mexican Peso FX Cross Rate","New Zealand Dollar/Malaysian Ringgit FX Cross Rate","New Zealand Dollar/Norwegian Krone FX Cross Rate","New Zealand Dollar/Philippine Peso FX Cross Rate","New Zealand Dollar/Pakistani Rupee FX Cross Rate","New Zealand Dollar/Polish Zloty FX Cross Rate","New Zealand Dollar/Swedish Krona FX Cross Rate","New Zealand Dollar/Singapore Dollar FX Cross Rate","New Zealand Dollar/Thai Baht FX Cross Rate","NZDTRY","New Zealand Dollar/Taiwan Dollar FX Cross Rate","New Zealand Dollar/US Dollar FX Spot Rate","New Zealand Dollar/South African Rand FX Cross Rate","Omani Rial/UAE Dirham FX Cross Rate","OMRGBP","OMRPKR","OMRUSD","PEN","PENGBP","PGKGBP","PHP","Philippine Peso/Australian Dollar FX Cross Rate","Philippine Peso/Euro FX Cross Rate","PHPGBP","Philippine Peso/Japanese Yen FX Cross Rate","PHPNZD","PHPUSD","PKR","PKREUR","PKRGBP","Pakistani Rupee/Japanese Yen FX Cross Rate","PKRZAR","US Dollar/Polish Zloty FX Spot Rate","PLNCHF","PLNCZK","Polish Zloty/Danish Krone FX Cross Rate","Polish Zloty/Euro FX Cross Rate","Polish Zloty/Hungarian Forint FX Cross Rate","PLNILS","Polish Zloty/Japanese Yen FX Cross Rate","Polish Zloty Romanian Leu","PLNRUB","Polish Zloty/Swedish Krona FX Cross Rate","PLNUSD","QARAED","QARGBP","QARPKR","QARUSD","RON","RONEUR","RONGBP","RONUSD","RSDUSD","US Dollar/Russian Rouble FX Spot Rate","RUBCHF","Russian Rouble/Euro FX Cross Rate","Russian Rouble/UK Pound Sterling FX Cross Rate","RUBILS","Russian Rouble/Japanese Yen FX Cross Rate","Russian Rouble/Polish Zloty FX Cross Rate","Russian Rouble/US Dollar FX Cross Rate","US Dollar/Saudi Arabian Riyal FX Spot Rate","SAREUR","SARPKR","Saudi Riyal US Dollar","SCRGBP","SCRUSD","US Dollar/Swedish Krona FX Spot Rate","Swedish Krona/Australian Dollar FX Cross Rate","Swedish Krona/Canadian Dollar FX Cross Rate","Swedish Krona/Swiss Franc FX Cross Rate","SEKCNH","Swedish Krona/Czech Koruna FX Cross Rate","Swedish Krona/Danish Krone FX Cross Rate","Swedish Krona/Euro FX Cross Rate","Swedish Krona/UK Pound Sterling FX Cross Rate","Swedish Krona/Israeli Shekel FX Cross Rate","Swedish Krona/Indian Rupee FX Cross Rate","SEKISK","Swedish Krona/Japanese Yen FX Cross Rate","Swedish Krona/Norwegian Krone FX Cross Rate","Swedish Krona/Polish Zloty FX Cross Rate","Swedish Krona/US Dollar FX Cross Rate","SEKZAR","US Dollar/Singapore Dollar FX Spot Rate","SGDARS","Singapore Dollar/Australian Dollar FX Cross Rate","Singapore Dollar/Brazilian Real FX Cross Rate","Singapore Dollar/Swiss Franc FX Cross Rate","SGDCNH","Singapore Dollar/Chinese Renminbi FX Cross Rate","Singapore Dollar/Danish Krone FX Cross Rate","Singapore Dollar/Euro FX Cross Rate","Singapore Dollar/UK Pound Sterling FX Cross Rate","Singapore Dollar/Hong Kong Dollar FX Cross Rate","Singapore Dollar/Indonesian Rupiah FX Cross Rate","Singapore Dollar/Indian Rupee FX Cross Rate","Singapore Dollar/Japanese Yen FX Cross Rate","SGDKRW","Singapore Dollar/Mexican Peso FX Cross Rate","Singapore Dollar/Malaysian Ringgit FX Cross Rate","Singapore Dollar/New Zealand Dollar FX Cross Rate","Singapore Dollar/Pakistani Rupee FX Cross Rate","SGDPLN","Singapore Dollar/Swedish Krona FX Cross Rate","Singapore Dollar/Thai Baht FX Cross Rate","Singapore Dollar/Taiwan Dollar FX Cross Rate","Singapore Dollar/US Dollar FX Cross Rate","Singapore Dollar/Vietnam Dong FX Cross Rate","Singapore Dollar/South African Rand FX Cross Rate","SLLUSD","SZLGBP","SZLUSD","US Dollar/Thai Baht FX Spot Rate","Thai Baht/Australian Dollar FX Cross Rate","Thai Baht/Canadian Dollar FX Cross Rate","Thai Baht/Swiss Franc FX Cross Rate","Thai Baht/Chinese Renminbi FX Cross Rate","Thai Baht/Euro FX Cross Rate","Thai Baht/UK Pound Sterling FX Cross Rate","Thai Baht/Hong Kong Dollar FX Cross Rate","Thai Baht/Indonesian Rupiah FX Cross Rate","Thai Baht/Indian Rupee FX Cross Rate","Thai Baht/Japanese Yen FX Cross Rate","Thai Baht/Korean Won FX Cross Rate","Thai Baht/Malaysian Ringgit FX Cross Rate","Thai Baht/New Zealand Dollar FX Cross Rate","Thai Baht/Pakistani Rupee FX Cross Rate","Thai Baht/Singapore Dollar FX Cross Rate","Thai Baht/Taiwan Dollar FX Cross Rate","THBUSD","THBZAR","TNDGBP","TNDUSD","US Dollar /Tongan pa'anga","US Dollar/Turkish Lira FX Spot Rate","TRYCHF","Turkish Lira/Danish Krone FX Cross Rate","TRYEUR","Turkish Lira/Japanese Yen FX Cross Rate","Turkish Lira/Polish Zloty FX Cross Rate","Turkish Lira/US Dollar FX Cross Rate","TRYZAR","TTDGBP","TTDUSD","US Dollar/Taiwan Dollar FX Spot Rate","TWDAUD","TWDCAD","TWDCHF","TWDCNY","Taiwan Dollar/Euro FX Cross Rate","Taiwan Dollar/UK Pound Sterling FX Cross Rate","Taiwan Dollar/Hong Kong Dollar FX Cross Rate","Taiwan Dollar/Indonesian Rupiah FX Cross Rate","TWDINR","Taiwan Dollar/Japanese Yen FX Cross Rate","TWDKRW","TWDMYR","TWDNZD","TWDPKR","Taiwan Dollar/Swedish Krona FX Cross Rate","Taiwan Dollar/Singapore Dollar FX Cross Rate","TWDTHB","TWDUSD","TWDZAR","UAHUSD","US Dollar FX Spot Rate","US Dollar/UAE Dirham FX Spot Rate","USDAFN","USDALL","USDAMD","US Dollar/Argentine Peso FX Spot Rate","US Dollar/Australian Dollar FX Cross Rate","USDBDT","USDBGN","US Dollar/Bahraini Dinar FX Spot Rate","USDBIF","USDBMD","US Dollar/Brunei Dollar FX Spot Rate","USDBOB","USDBRL","USDBWP","US Dollar Belarusian Ruble","USDBZD","US Dollar/Canadian Dollar FX Spot Rate","USDCDF","USDCHF","US Dollar/Chilean Peso FX Spot Rate","USDCNH","US Dollar/Chinese Renminbi FX Spot Rate","USDCOP","USDCRC","USDCUP","USDCVE","US Dollar/Czech Koruna FX Spot Rate","USDDJF","US Dollar/Danish Krone FX Spot Rate","USDDOP","USDDZD","US Dollar/Egyptian Pound FX Spot Rate","USDETB","US Dollar/Euro FX Cross Rate","USDFJD","US Dollar/UK Pound Sterling FX Cross Rate","USDGEL","US Dollar/Ghanian Cedi FX Spot Rate","USDGMD","USDGNF","USDGTQ","US Dollar/Hong Kong Dollar FX Spot Rate","USDHNL","USDHRK","USDHTG","US Dollar/Hungarian Forint FX Spot Rate","US Dollar/Indonesian Rupiah FX Spot Rate","US Dollar/Israeli Shekel FX Spot Rate","US Dollar/Indian Rupee FX Spot Rate","USDIQD","USDISK","USDJOD","US Dollar/Japanese Yen FX Spot Rate","US Dollar/Kenyan Shilling FX Spot Rate","US Dollar/Kyrgyzstan som","USDKHR","USDKMF","US Dollar/Korean Won FX Spot Rate","US Dollar/Kuwaiti Dinar FX Spot Rate","USDKZT","USDLAK","USDLBP","US Dollar/Sri Lanka Rupee FX Spot Rate","USDLRD","USDLSL","USDLYD","US Dollar/Moroccan Dirham FX Spot Rate","USDMDL","USDMKD","USDMMK","USDMOP","USDMUR","USDMVR","USDMWK","US Dollar/Mexican Peso FX Spot Rate","US Dollar/Malaysian Ringgit FX Spot Rate","USDNAD","US Dollar/Nigerian Naira FX Spot Rate","USDNIO","US Dollar/Norwegian Krone FX Spot Rate","USDNPR","US Dollar/New Zealand Dollar FX Cross Rate","US Dollar/Omani Rial FX Spot Rate","USDPAB","US Dollar/Peruvian Sol FX Spot Rate","USDPGK","US Dollar/Philippine Peso FX Spot Rate","US Dollar/Pakistani Rupee FX Spot Rate","US Dollar/Polish Zloty FX Spot Rate","USDPYG","USDQAR","USDRON","USDRSD","US Dollar/Russian Rouble FX Spot Rate","USDRWF","US Dollar/Saudi Arabian Riyal FX Spot Rate","US Dollar/Seychelles Rupee FX Spot Rate","US Dollar/Swedish Krona FX Spot Rate","US Dollar/Singapore Dollar FX Spot Rate","USDSLL","USDSOS","USDSVC","USDSZL","US Dollar/Thai Baht FX Spot Rate","USDTND","US Dollar /Tongan pa'anga","USDTRY","US Dollar/Taiwan Dollar FX Spot Rate","USDTZS","US Dollar/Ukraine Hryvnia FX Spot Rate","US Dollar FX Spot Rate","USDUYU","USDUZS","US Dollar/Vietnam Dong FX Spot Rate","USDXAF","USDXOF","US Dollar/Pacific Franc FX Spot Rate","USDYER","US Dollar/South African Rand FX Spot Rate","UYU","UYUUSD","Uzbekistani Sum Russian Ruble","US Dollar/Vietnam Dong FX Spot Rate","VNDEUR","Vietnam Dong/Japanese Yen FX Cross Rate","XAGUSD","XAUUSD","XCDGBP","XDR","XPDUSD","XPTUSD","YERUSD","ZAR","US Dollar/South African Rand FX Spot Rate","South African Rand/UAE Dirham FX Cross Rate","South African Rand/Australian Dollar FX Cross Rate","South African Rand/Brazilian Real FX Cross Rate","ZARBWP","South African Rand/Canadian Dollar FX Cross Rate","South African Rand/Swiss Franc FX Cross Rate","ZARCNY","South African Rand/Danish Krone FX Cross Rate","South African Rand/Euro FX Cross Rate","South African Rand/UK Pound Sterling FX Cross Rate","South African Rand/Hong Kong Dollar FX Cross Rate","ZARIDR","ZARINR","South African Rand/Japanese Yen FX Cross Rate","ZARKES","ZARKRW","South African Rand/Mexican Peso FX Cross Rate","South African Rand/Norwegian Krone FX Cross Rate","South African Rand/New Zealand Dollar FX Cross Rate","ZARPHP","ZARPKR","South African Rand/Polish Zloty FX Cross Rate","South African Rand Russian Ruble","South African Rand/Swedish Krona FX Cross Rate","South African Rand/Singapore Dollar FX Cross Rate","ZARTHB","South African Rand/Taiwan Dollar FX Cross Rate","South African Rand/US Dollar FX Cross Rate"],["Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown","Unknown"],["FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX","FOREX"],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"CHF",null,null,null,null,"EUR",null,null,null,null,null,null,null,"JPY",null,null,null,null,"NZD",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"AUD",null,"CHF",null,null,null,null,"EUR","GBP",null,null,null,null,null,"JPY",null,null,null,null,null,"NZD",null,null,null,null,null,null,null,null,null,null,null,null,null,null,"AUD",null,null,"CAD",null,null,null,"EUR","GBP",null,null,null,null,null,null,"JPY",null,null,null,null,"NZD",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"EUR",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"EUR",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"CAD","CHF",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"NZD",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"EUR",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"EUR",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"AUD","CAD","CHF",null,null,null,null,"EUR","GBP",null,null,null,null,"JPY",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"VND",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"VND",null,null,null,null,null,null,null,null,"VND",null,null,null,null,null,null,null,"GBP",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency","Currency"],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Code<\/th>\n      <th>Name<\/th>\n      <th>Country<\/th>\n      <th>Exchange<\/th>\n      <th>Currency<\/th>\n      <th>Type<\/th>\n      <th>Isin<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>print(params$year)</code></pre>
-<pre><code>## [1] 2018</code></pre>
-<pre class="r"><code>print(params$region)</code></pre>
-<pre><code>## [1] &quot;Europe&quot;</code></pre>
-<pre class="r"><code>print(params$printcode)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>library(googleVis)</code></pre>
+<pre><code>## 
+## Welcome to googleVis version 0.7.0
+## 
+## Please read Google&#39;s Terms of Use
+## before you start using the package:
+## https://developers.google.com/terms/
+## 
+## Note, the plot method of googleVis will by default use
+## the standard browser to display its output.
+## 
+## See the googleVis package vignettes for more details,
+## or visit https://mages.github.io/googleVis/.
+## 
+## To suppress this message use:
+## suppressPackageStartupMessages(library(googleVis))</code></pre>
+<pre class="r"><code>set.seed(2020)
+x &lt;- seq(0,100,by=0.5)
+y &lt;- (50-x)^2+rnorm(length(x),sd=100)
+ 
+curvy &lt;- data.frame(x,y)
+ 
+ 
+gvScat &lt;- gvisScatterChart(curvy,
+                   options=list(
+                     explorer=&quot;{actions: [‘dragToZoom’,
+                     ‘rightClickToReset’],
+                     maxZoomIn:0.05}&quot;,
+                     chartArea=&quot;{width:’85%’,height:’80%’}&quot;,
+                     hAxis=&quot;{title: ‘Explanatory x’,
+                     titleTextStyle: {color: ‘#000000’}}&quot;,
+                     vAxis=&quot;{title: ‘Response y’,
+                     titleTextStyle: {color: ‘#000000’}}&quot;,
+                     title=&quot;Curvilinear Relationship&quot;,
+                     width=550, height=500,
+                     legend=&quot;none&quot;),
+                   chartid=&quot;ZoomZoom&quot;)
+ 
+print(gvScat,&#39;chart&#39;)</code></pre>
+<!-- ScatterChart generated in R 4.2.1 by googleVis 0.7.0 package -->
+<!-- Wed Jul 20 23:38:46 2022 -->
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataZoomZoom () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+0,
+2537.697212
+],
+[
+0.5,
+2480.404837
+],
+[
+1,
+2291.197683
+],
+[
+1.5,
+2239.20941
+],
+[
+2,
+2024.346568
+],
+[
+2.5,
+2328.30735
+],
+[
+3,
+2302.912102
+],
+[
+3.5,
+2139.312225
+],
+[
+4,
+2291.913135
+],
+[
+4.5,
+2081.986679
+],
+[
+5,
+1939.687718
+],
+[
+5.5,
+2071.175918
+],
+[
+6,
+2055.637296
+],
+[
+6.5,
+1855.09161
+],
+[
+7,
+1836.673977
+],
+[
+7.5,
+1986.254312
+],
+[
+8,
+1934.399588
+],
+[
+8.5,
+1418.373539
+],
+[
+9,
+1452.102505
+],
+[
+9.5,
+1646.080349
+],
+[
+10,
+1817.436525
+],
+[
+10.5,
+1670.068265
+],
+[
+11,
+1552.822032
+],
+[
+11.5,
+1474.935244
+],
+[
+12,
+1527.426874
+],
+[
+12.5,
+1426.125064
+],
+[
+13,
+1498.784138
+],
+[
+13.5,
+1425.921831
+],
+[
+14,
+1281.256681
+],
+[
+14.5,
+1271.293199
+],
+[
+15,
+1143.749534
+],
+[
+15.5,
+1115.879783
+],
+[
+16,
+1265.534507
+],
+[
+16.5,
+1365.787371
+],
+[
+17,
+1127.811847
+],
+[
+17.5,
+1085.312767
+],
+[
+18,
+995.4401713
+],
+[
+18.5,
+999.8514718
+],
+[
+19,
+904.9701396
+],
+[
+19.5,
+974.9688372
+],
+[
+20,
+990.8501134
+],
+[
+20.5,
+819.7440402
+],
+[
+21,
+810.8995988
+],
+[
+21.5,
+739.6464023
+],
+[
+22,
+665.9922973
+],
+[
+22.5,
+781.5574713
+],
+[
+23,
+691.9288703
+],
+[
+23.5,
+704.4679564
+],
+[
+24,
+742.0044122
+],
+[
+24.5,
+699.1293635
+],
+[
+25,
+606.1210083
+],
+[
+25.5,
+660.3859521
+],
+[
+26,
+508.6239947
+],
+[
+26.5,
+599.8550241
+],
+[
+27,
+540.8753228
+],
+[
+27.5,
+518.3726283
+],
+[
+28,
+465.3953206
+],
+[
+28.5,
+329.4228811
+],
+[
+29,
+384.3077049
+],
+[
+29.5,
+478.1333933
+],
+[
+30,
+590.9037231
+],
+[
+30.5,
+405.3257043
+],
+[
+31,
+201.1684941
+],
+[
+31.5,
+662.4131747
+],
+[
+32,
+419.5235375
+],
+[
+32.5,
+343.1144616
+],
+[
+33,
+381.2919068
+],
+[
+33.5,
+251.6978654
+],
+[
+34,
+265.2966701
+],
+[
+34.5,
+257.076218
+],
+[
+35,
+304.5839125
+],
+[
+35.5,
+374.8505607
+],
+[
+36,
+24.30756836
+],
+[
+36.5,
+150.4156894
+],
+[
+37,
+78.5860028
+],
+[
+37.5,
+85.85072033
+],
+[
+38,
+-33.80994618
+],
+[
+38.5,
+60.02448374
+],
+[
+39,
+125.615421
+],
+[
+39.5,
+134.6158021
+],
+[
+40,
+162.8331306
+],
+[
+40.5,
+87.78614177
+],
+[
+41,
+312.4153309
+],
+[
+41.5,
+89.97102573
+],
+[
+42,
+-38.44147667
+],
+[
+42.5,
+283.7181301
+],
+[
+43,
+-139.9056665
+],
+[
+43.5,
+151.6451601
+],
+[
+44,
+220.6167027
+],
+[
+44.5,
+82.35326735
+],
+[
+45,
+-128.2962108
+],
+[
+45.5,
+-173.6864969
+],
+[
+46,
+64.69165381
+],
+[
+46.5,
+136.7736691
+],
+[
+47,
+-12.72734263
+],
+[
+47.5,
+-71.70931145
+],
+[
+48,
+38.88744997
+],
+[
+48.5,
+70.422425
+],
+[
+49,
+-52.14613874
+],
+[
+49.5,
+-67.48934215
+],
+[
+50,
+-172.8783941
+],
+[
+50.5,
+-98.87609916
+],
+[
+51,
+-57.55055617
+],
+[
+51.5,
+40.6021748
+],
+[
+52,
+78.66649197
+],
+[
+52.5,
+-86.59209118
+],
+[
+53,
+-24.81762967
+],
+[
+53.5,
+166.7614015
+],
+[
+54,
+42.65088778
+],
+[
+54.5,
+50.20339324
+],
+[
+55,
+-7.280201955
+],
+[
+55.5,
+173.7847433
+],
+[
+56,
+136.6527204
+],
+[
+56.5,
+-129.6913636
+],
+[
+57,
+78.89204617
+],
+[
+57.5,
+-26.2225636
+],
+[
+58,
+-55.95898328
+],
+[
+58.5,
+-55.38871173
+],
+[
+59,
+68.68219333
+],
+[
+59.5,
+306.8442199
+],
+[
+60,
+68.77170251
+],
+[
+60.5,
+146.9939225
+],
+[
+61,
+247.9439261
+],
+[
+61.5,
+-94.23538391
+],
+[
+62,
+15.01500904
+],
+[
+62.5,
+175.0385938
+],
+[
+63,
+244.1642855
+],
+[
+63.5,
+360.7181336
+],
+[
+64,
+346.8271736
+],
+[
+64.5,
+114.9338291
+],
+[
+65,
+235.342274
+],
+[
+65.5,
+179.6939502
+],
+[
+66,
+246.2399374
+],
+[
+66.5,
+259.9051893
+],
+[
+67,
+184.5320483
+],
+[
+67.5,
+298.762966
+],
+[
+68,
+500.0135333
+],
+[
+68.5,
+199.0380413
+],
+[
+69,
+627.2201028
+],
+[
+69.5,
+251.1308468
+],
+[
+70,
+401.5101774
+],
+[
+70.5,
+416.2819428
+],
+[
+71,
+660.1440323
+],
+[
+71.5,
+264.606245
+],
+[
+72,
+530.3665665
+],
+[
+72.5,
+480.0287843
+],
+[
+73,
+415.4285494
+],
+[
+73.5,
+573.3799481
+],
+[
+74,
+585.9427928
+],
+[
+74.5,
+294.5816348
+],
+[
+75,
+590.2863346
+],
+[
+75.5,
+455.5873842
+],
+[
+76,
+654.3923354
+],
+[
+76.5,
+557.3303521
+],
+[
+77,
+763.5434061
+],
+[
+77.5,
+775.0702394
+],
+[
+78,
+671.2147217
+],
+[
+78.5,
+817.2950343
+],
+[
+79,
+772.7300908
+],
+[
+79.5,
+935.0553817
+],
+[
+80,
+961.0364487
+],
+[
+80.5,
+878.9843067
+],
+[
+81,
+1036.440589
+],
+[
+81.5,
+1011.060497
+],
+[
+82,
+831.1714369
+],
+[
+82.5,
+1179.832136
+],
+[
+83,
+1121.827731
+],
+[
+83.5,
+1036.758551
+],
+[
+84,
+966.4311784
+],
+[
+84.5,
+1274.919241
+],
+[
+85,
+1349.402511
+],
+[
+85.5,
+1283.875996
+],
+[
+86,
+1219.930646
+],
+[
+86.5,
+1409.472096
+],
+[
+87,
+1435.155675
+],
+[
+87.5,
+1246.876663
+],
+[
+88,
+1224.965309
+],
+[
+88.5,
+1364.574604
+],
+[
+89,
+1626.000513
+],
+[
+89.5,
+1559.679692
+],
+[
+90,
+1572.398767
+],
+[
+90.5,
+1725.102129
+],
+[
+91,
+1576.106534
+],
+[
+91.5,
+1548.891366
+],
+[
+92,
+2005.413909
+],
+[
+92.5,
+1786.685823
+],
+[
+93,
+1941.678696
+],
+[
+93.5,
+1820.903637
+],
+[
+94,
+1806.025829
+],
+[
+94.5,
+2068.67964
+],
+[
+95,
+2145.064152
+],
+[
+95.5,
+1953.216022
+],
+[
+96,
+2192.147189
+],
+[
+96.5,
+2249.259024
+],
+[
+97,
+2136.275729
+],
+[
+97.5,
+2318.912073
+],
+[
+98,
+2194.855727
+],
+[
+98.5,
+2300.640547
+],
+[
+99,
+2402.693396
+],
+[
+99.5,
+2516.349069
+],
+[
+100,
+2427.046688
+] 
+];
+data.addColumn('number','x');
+data.addColumn('number','y');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartZoomZoom() {
+var data = gvisDataZoomZoom();
+var options = {};
+options["allowHtml"] = true;
+options["explorer"] = {actions: [‘dragToZoom’,
+                     ‘rightClickToReset’],
+                     maxZoomIn:0.05};
+options["chartArea"] = {width:’85%’,height:’80%’};
+options["hAxis"] = {title: ‘Explanatory x’,
+                     titleTextStyle: {color: ‘#000000’}};
+options["vAxis"] = {title: ‘Response y’,
+                     titleTextStyle: {color: ‘#000000’}};
+options["title"] = "Curvilinear Relationship";
+options["width"] = 550;
+options["height"] = 500;
+options["legend"] = "none";
+
+    var chart = new google.visualization.ScatterChart(
+    document.getElementById('ZoomZoom')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartZoomZoom);
+})();
+function displayChartZoomZoom() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartZoomZoom"></script>
+<!-- divChart -->
+<div id="ZoomZoom" style="width: 550; height: 500;">
+
+</div>
 </div>
 
 <p>Copyright &copy; 2016 Skynet, Inc. All rights reserved.</p>
