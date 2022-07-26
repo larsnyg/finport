@@ -15,8 +15,8 @@ navbar:
         - text: "Heading 1"
         - text: "Data Explorer"
           href: explorer.html
-        - text: "Page B"
-          href: page-b.html
+        - text: "Google Chart"
+          href: googleChart.html
         - text: "---------"
         - text: "Heading 2"
         - text: "Page C"
