@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "viz.html",
+    "href": "viz.html",
+    "title": "Visualizations",
+    "section": "",
+    "text": "data = d3.csv(\"https://eodhistoricaldata.com/api/eod/AAPL.US?from=2021-01-01&period=d&api_token=5b2b58da20bd52.76199398&\", d3.autoType)\ndata\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfiltered = data.filter(function(penguin) {\n  return bill_length_min < penguin.bill_length &&\n         islands.includes(penguin.island);\n})\n\n\n\n\n\n\n\nPlot.plot({\n  width: 600,\n  height: 400,\n  caption: \"APPLE stock price\",\n  style: {\n    background: \"#7e9a9a\"\n  },\n  marks: [\n    Plot.line(data, {x: \"Date\", y: \"Close\"}),\n  ]\n})\n\n\n\n\n\n\n\nalphabet = FileAttachment(\"alphabet.csv\").csv()\nalphabet\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlot.plot({\n  marks: [\n    Plot.barY(alphabet, {x: \"letter\", y: \"frequency\", fill: \"steelblue\"}),\n    Plot.ruleY([0])\n  ]\n})"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "finportaQuatro",
@@ -12,12 +19,5 @@
     "title": "About",
     "section": "",
     "text": "1 + 1\n\n[1] 2\n\n\n\nlibrary(reactable)\nmainTable <- data.table::fread(\"/Users/lars/Github/finport/data/mainTable.csv\")\nreactable(mainTable, groupBy = \"Exchange\", paginateSubRows = TRUE)\n\n\n\n\n\n\n\n{\n  let sum = 0;\n  for (let i = 0; i < 10; ++i) {\n    sum += i;\n  }\n  return sum;\n}\n\n\n\n\n\n\n\nviewof x = Inputs.range([0,1])"
-  },
-  {
-    "objectID": "viz.html",
-    "href": "viz.html",
-    "title": "Visualizations",
-    "section": "",
-    "text": "data = d3.csv(\"https://eodhistoricaldata.com/api/eod/AAPL.US?from=2021-01-01&period=d&api_token=5b2b58da20bd52.76199398&\", d3.autoType)\ndata\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfiltered = data.filter(function(penguin) {\n  return bill_length_min < penguin.bill_length &&\n         islands.includes(penguin.island);\n})\n\n\n\n\n\n\n\nPlot.plot({\n  width: 600,\n  height: 400,\n  caption: \"APPLE stock price\",\n  style: {\n    background: \"#7e9a9a\"\n  },\n  marks: [\n    Plot.line(data, {x: \"Date\", y: \"Close\"}),\n  ]\n})\n\n\n\n\n\n\n\nalphabet = FileAttachment(\"alphabet.csv\").csv()\nalphabet\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlot.plot({\n  marks: [\n    Plot.barY(alphabet, {x: \"letter\", y: \"frequency\", fill: \"steelblue\"}),\n    Plot.ruleY([0])\n  ]\n})"
   }
 ]
