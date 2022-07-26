@@ -1,0 +1,60 @@
+---
+title: "Visualizations"
+author: "Lars"
+editor: visual
+execute: 
+  warning: false
+  echo: false
+---
+
+# Hello
+
+```{ojs}
+data = d3.csv("https://eodhistoricaldata.com/api/eod/AAPL.US?from=2021-01-01&period=d&api_token=5b2b58da20bd52.76199398&", d3.autoType)
+data
+```
+
+```{ojs}
+viewof bill_length_min = Inputs.range(
+  [32, 50], 
+  {value: 35, step: 1, label: "Bill length (min):"}
+)
+viewof islands = Inputs.checkbox(
+  ["Torgersen", "Biscoe", "Dream"], 
+  { value: ["Torgersen", "Biscoe"], 
+    label: "Islands:"
+  }
+)
+```
+
+```{ojs}
+filtered = data.filter(function(penguin) {
+  return bill_length_min < penguin.bill_length &&
+         islands.includes(penguin.island);
+})
+```
+
+```{ojs}
+Plot.plot({
+  width: 600,
+  height: 400,
+  caption: "APPLE stock price",
+  style: {
+    background: "#7e9a9a"
+  },
+  marks: [
+    Plot.line(data, {x: "Date", y: "Close"}),
+  ]
+})
+```
+
+```{ojs}
+alphabet = FileAttachment("alphabet.csv").csv()
+alphabet
+Plot.plot({
+  marks: [
+    Plot.barY(alphabet, {x: "letter", y: "frequency", fill: "steelblue"}),
+    Plot.ruleY([0])
+  ]
+})
+```

@@ -1,0 +1,29 @@
+---
+title: "About"
+---
+
+About this site
+
+```{r}
+1 + 1
+```
+
+```{r}
+library(reactable)
+mainTable <- data.table::fread("/Users/lars/Github/finport/data/mainTable.csv")
+reactable(mainTable, groupBy = "Exchange", paginateSubRows = TRUE)
+```
+
+```{ojs}
+{
+  let sum = 0;
+  for (let i = 0; i < 10; ++i) {
+    sum += i;
+  }
+  return sum;
+}
+```
+
+```{ojs}
+viewof x = Inputs.range([0,1])
+```

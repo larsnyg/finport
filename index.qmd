@@ -1,0 +1,21 @@
+---
+title: "finportaQuatro"
+---
+
+This is a Quarto website.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+# React Table
+
+```{r}
+library(reactable)
+reactable::reactable(iris)
+```
+
+# GGPlot
+
+```{r}
+library(ggplot2)
+ggplot2::ggplot(iris, aes(Sepal.Length, Sepal.Width)) + geom_point()
+```

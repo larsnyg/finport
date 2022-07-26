@@ -1,0 +1,20 @@
+project:
+  type: website
+
+website:
+  title: "QuantPortal"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - viz.qmd
+
+format:
+  html:
+    css: styles.css
+    toc: true
+    page-layout: full
+
+editor: visual
+

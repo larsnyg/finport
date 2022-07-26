@@ -1,2 +1,0 @@
-# finport
-Financial portal
