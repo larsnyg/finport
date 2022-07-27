@@ -11,7 +11,6 @@ website:
       - text: "More"
         menu:
           - eod.qmd
-          - about.qmd 
     right: 
       - about.qmd
   page-footer: "Copyright 2022, Lars Nygaard"
