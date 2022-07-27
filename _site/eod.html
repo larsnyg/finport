@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Lars">
+
+<title>Quant - EOD API</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Quant</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./viz.html">Viz</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="./eod.html">
+ <span class="dropdown-text">EOD API</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./about.html">
+ <span class="dropdown-text">About</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">EOD API</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Lars </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="get-data-from-eodhistoricaldata.com-with-python-eod-module" class="level3">
+<h3 class="anchored" data-anchor-id="get-data-from-eodhistoricaldata.com-with-python-eod-module">Get data from eodhistoricaldata.com with python eod module</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">source_python</span>(<span class="st">"inst/python/eod_fun.py"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>aapl <span class="ot">&lt;-</span> <span class="fu">get_prices_eod</span>(<span class="st">"AAPL.US"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>aapl<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(aapl<span class="sc">$</span>date)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(aapl, <span class="fu">aes</span>(date, adjusted_close)) <span class="sc">+</span> <span class="fu">geom_line</span>() </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="eod_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">source_python</span>(<span class="st">"inst/python/eod_fun.py"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>exchanges <span class="ot">&lt;-</span> <span class="fu">get_exchanges</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>exchanges <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">rbindlist</span>(exchanges)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(exchanges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Code</th>
+<th style="text-align: left;">OperatingMIC</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: left;">Currency</th>
+<th style="text-align: left;">CountryISO2</th>
+<th style="text-align: left;">CountryISO3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">USA Stocks</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">XNAS, XNYS</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">USD</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">USA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London Exchange</td>
+<td style="text-align: left;">LSE</td>
+<td style="text-align: left;">XLON</td>
+<td style="text-align: left;">UK</td>
+<td style="text-align: left;">GBP</td>
+<td style="text-align: left;">GB</td>
+<td style="text-align: left;">GBR</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TSX Venture Exchange</td>
+<td style="text-align: left;">V</td>
+<td style="text-align: left;">XTSX</td>
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">CAD</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">CAN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Toronto Exchange</td>
+<td style="text-align: left;">TO</td>
+<td style="text-align: left;">XTSE</td>
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">CAD</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">CAN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NEO Exchange</td>
+<td style="text-align: left;">NEO</td>
+<td style="text-align: left;">NEOE</td>
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">CAD</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">CAN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">XETRA Exchange</td>
+<td style="text-align: left;">XETRA</td>
+<td style="text-align: left;">XETR</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dusseldorf Exchange</td>
+<td style="text-align: left;">DU</td>
+<td style="text-align: left;">XDUS</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hamburg Exchange</td>
+<td style="text-align: left;">HM</td>
+<td style="text-align: left;">XHAM</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hanover Exchange</td>
+<td style="text-align: left;">HA</td>
+<td style="text-align: left;">XHAN</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Munich Exchange</td>
+<td style="text-align: left;">MU</td>
+<td style="text-align: left;">XMUN</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stuttgart Exchange</td>
+<td style="text-align: left;">STU</td>
+<td style="text-align: left;">XSTU</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frankfurt Exchange</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: left;">XFRA</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Berlin Exchange</td>
+<td style="text-align: left;">BE</td>
+<td style="text-align: left;">XBER</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">DE</td>
+<td style="text-align: left;">DEU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vienna Exchange</td>
+<td style="text-align: left;">VI</td>
+<td style="text-align: left;">XWBO</td>
+<td style="text-align: left;">Austria</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">AT</td>
+<td style="text-align: left;">AUT</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Luxembourg Stock Exchange</td>
+<td style="text-align: left;">LU</td>
+<td style="text-align: left;">XLUX</td>
+<td style="text-align: left;">Luxembourg</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">LU</td>
+<td style="text-align: left;">LUX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Borsa Italiana</td>
+<td style="text-align: left;">MI</td>
+<td style="text-align: left;">XMIL</td>
+<td style="text-align: left;">Italy</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">IT</td>
+<td style="text-align: left;">ITA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Euronext Paris</td>
+<td style="text-align: left;">PA</td>
+<td style="text-align: left;">XPAR</td>
+<td style="text-align: left;">France</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">FR</td>
+<td style="text-align: left;">FRA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Euronext Brussels</td>
+<td style="text-align: left;">BR</td>
+<td style="text-align: left;">XBRU</td>
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">BE</td>
+<td style="text-align: left;">BEL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Madrid Exchange</td>
+<td style="text-align: left;">MC</td>
+<td style="text-align: left;">BMEX</td>
+<td style="text-align: left;">Spain</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">ES</td>
+<td style="text-align: left;">ESP</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Swiss Exchange</td>
+<td style="text-align: left;">VX</td>
+<td style="text-align: left;">XSWX</td>
+<td style="text-align: left;">Switzerland</td>
+<td style="text-align: left;">CHF</td>
+<td style="text-align: left;">CH</td>
+<td style="text-align: left;">CHE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIX Swiss Exchange</td>
+<td style="text-align: left;">SW</td>
+<td style="text-align: left;">XSWX</td>
+<td style="text-align: left;">Switzerland</td>
+<td style="text-align: left;">CHF</td>
+<td style="text-align: left;">CH</td>
+<td style="text-align: left;">CHE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Euronext Lisbon</td>
+<td style="text-align: left;">LS</td>
+<td style="text-align: left;">XLIS</td>
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">PT</td>
+<td style="text-align: left;">PRT</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Euronext Amsterdam</td>
+<td style="text-align: left;">AS</td>
+<td style="text-align: left;">XAMS</td>
+<td style="text-align: left;">Netherlands</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">NL</td>
+<td style="text-align: left;">NLD</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stockholm Exchange</td>
+<td style="text-align: left;">ST</td>
+<td style="text-align: left;">XSTO</td>
+<td style="text-align: left;">Sweden</td>
+<td style="text-align: left;">SEK</td>
+<td style="text-align: left;">SE</td>
+<td style="text-align: left;">SWE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tallinn Exchange</td>
+<td style="text-align: left;">TL</td>
+<td style="text-align: left;">XTAL</td>
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">EE</td>
+<td style="text-align: left;">EST</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Irish Exchange</td>
+<td style="text-align: left;">IR</td>
+<td style="text-align: left;">XDUB</td>
+<td style="text-align: left;">Ireland</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">IE</td>
+<td style="text-align: left;">IRL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Copenhagen Exchange</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: left;">XCSE</td>
+<td style="text-align: left;">Denmark</td>
+<td style="text-align: left;">DKK</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">DNK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oslo Stock Exchange</td>
+<td style="text-align: left;">OL</td>
+<td style="text-align: left;">XOSL</td>
+<td style="text-align: left;">Norway</td>
+<td style="text-align: left;">NOK</td>
+<td style="text-align: left;">NO</td>
+<td style="text-align: left;">NOR</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vilnus Exchange</td>
+<td style="text-align: left;">VS</td>
+<td style="text-align: left;">XLIT</td>
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">LT</td>
+<td style="text-align: left;">LTU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Riga Exchange</td>
+<td style="text-align: left;">RG</td>
+<td style="text-align: left;">XRIS</td>
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">LV</td>
+<td style="text-align: left;">LVA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nasdaq Baltic</td>
+<td style="text-align: left;">NB</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">EE</td>
+<td style="text-align: left;">EST</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">First North Denmark</td>
+<td style="text-align: left;">NFN</td>
+<td style="text-align: left;">XCSE</td>
+<td style="text-align: left;">Sweden</td>
+<td style="text-align: left;">SEK</td>
+<td style="text-align: left;">SE</td>
+<td style="text-align: left;">SWE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Iceland Exchange</td>
+<td style="text-align: left;">IC</td>
+<td style="text-align: left;">XICE</td>
+<td style="text-align: left;">Iceland</td>
+<td style="text-align: left;">ISK</td>
+<td style="text-align: left;">IS</td>
+<td style="text-align: left;">ISL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Helsinki Exchange</td>
+<td style="text-align: left;">HE</td>
+<td style="text-align: left;">XHEL</td>
+<td style="text-align: left;">Finland</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">FI</td>
+<td style="text-align: left;">FIN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prague Stock Exchange</td>
+<td style="text-align: left;">PR</td>
+<td style="text-align: left;">XPRA</td>
+<td style="text-align: left;">Czech Republic</td>
+<td style="text-align: left;">CZK</td>
+<td style="text-align: left;">CZ</td>
+<td style="text-align: left;">CZE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hong Kong Exchange</td>
+<td style="text-align: left;">HK</td>
+<td style="text-align: left;">XHKG</td>
+<td style="text-align: left;">Hong Kong</td>
+<td style="text-align: left;">HKD</td>
+<td style="text-align: left;">HK</td>
+<td style="text-align: left;">HKG</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tel Aviv Exchange</td>
+<td style="text-align: left;">TA</td>
+<td style="text-align: left;">XTAE</td>
+<td style="text-align: left;">Israel</td>
+<td style="text-align: left;">ILS</td>
+<td style="text-align: left;">IL</td>
+<td style="text-align: left;">ISR</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KOSDAQ</td>
+<td style="text-align: left;">KQ</td>
+<td style="text-align: left;">XKOS</td>
+<td style="text-align: left;">Korea</td>
+<td style="text-align: left;">KRW</td>
+<td style="text-align: left;">KR</td>
+<td style="text-align: left;">KOR</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Korea Stock Exchange</td>
+<td style="text-align: left;">KO</td>
+<td style="text-align: left;">XKRX</td>
+<td style="text-align: left;">Korea</td>
+<td style="text-align: left;">KRW</td>
+<td style="text-align: left;">KR</td>
+<td style="text-align: left;">KOR</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Budapest Stock Exchange</td>
+<td style="text-align: left;">BUD</td>
+<td style="text-align: left;">XBUD</td>
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">HUF</td>
+<td style="text-align: left;">HU</td>
+<td style="text-align: left;">HUN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Philippine Stock Exchange</td>
+<td style="text-align: left;">PSE</td>
+<td style="text-align: left;">XPHS</td>
+<td style="text-align: left;">Philippines</td>
+<td style="text-align: left;">PHP</td>
+<td style="text-align: left;">PH</td>
+<td style="text-align: left;">PHL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Warsaw Stock Exchange</td>
+<td style="text-align: left;">WAR</td>
+<td style="text-align: left;">XWAR</td>
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">PLN</td>
+<td style="text-align: left;">PL</td>
+<td style="text-align: left;">POL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Singapore Exchange</td>
+<td style="text-align: left;">SG</td>
+<td style="text-align: left;">XSES</td>
+<td style="text-align: left;">Singapore</td>
+<td style="text-align: left;">SGD</td>
+<td style="text-align: left;">SG</td>
+<td style="text-align: left;">SGP</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bombay Exchange</td>
+<td style="text-align: left;">BSE</td>
+<td style="text-align: left;">XBOM</td>
+<td style="text-align: left;">India</td>
+<td style="text-align: left;">INR</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">IND</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thailand Exchange</td>
+<td style="text-align: left;">BK</td>
+<td style="text-align: left;">XBKK</td>
+<td style="text-align: left;">Thailand</td>
+<td style="text-align: left;">THB</td>
+<td style="text-align: left;">TH</td>
+<td style="text-align: left;">THA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Karachi Stock Exchange</td>
+<td style="text-align: left;">KAR</td>
+<td style="text-align: left;">XKAR</td>
+<td style="text-align: left;">Pakistan</td>
+<td style="text-align: left;">PKR</td>
+<td style="text-align: left;">PK</td>
+<td style="text-align: left;">PAK</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shenzhen Exchange</td>
+<td style="text-align: left;">SHE</td>
+<td style="text-align: left;">XSHE</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: left;">CNY</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">CHN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Australia Exchange</td>
+<td style="text-align: left;">AU</td>
+<td style="text-align: left;">XASX</td>
+<td style="text-align: left;">Australia</td>
+<td style="text-align: left;">AUD</td>
+<td style="text-align: left;">AU</td>
+<td style="text-align: left;">AUS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Athens Exchange</td>
+<td style="text-align: left;">AT</td>
+<td style="text-align: left;">ASEX</td>
+<td style="text-align: left;">Greece</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">GR</td>
+<td style="text-align: left;">GRC</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tokyo Stock Exchange</td>
+<td style="text-align: left;">TSE</td>
+<td style="text-align: left;">XJPX</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">JPY</td>
+<td style="text-align: left;">JP</td>
+<td style="text-align: left;">JPN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Saudi Arabia Exchange</td>
+<td style="text-align: left;">SR</td>
+<td style="text-align: left;">XSAU</td>
+<td style="text-align: left;">Saudi Arabia</td>
+<td style="text-align: left;">SAR</td>
+<td style="text-align: left;">SA</td>
+<td style="text-align: left;">SAU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Johannesburg Exchange</td>
+<td style="text-align: left;">JSE</td>
+<td style="text-align: left;">XJSE</td>
+<td style="text-align: left;">South Africa</td>
+<td style="text-align: left;">ZAR</td>
+<td style="text-align: left;">ZA</td>
+<td style="text-align: left;">ZAF</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NSE (India)</td>
+<td style="text-align: left;">NSE</td>
+<td style="text-align: left;">XNSE</td>
+<td style="text-align: left;">India</td>
+<td style="text-align: left;">INR</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">IND</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Shanghai Exchange</td>
+<td style="text-align: left;">SHG</td>
+<td style="text-align: left;">XSHG</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: left;">CNY</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">CHN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jakarta Exchange</td>
+<td style="text-align: left;">JK</td>
+<td style="text-align: left;">XIDX</td>
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: left;">IDR</td>
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;">IDN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chilean Stock Exchange</td>
+<td style="text-align: left;">SN</td>
+<td style="text-align: left;">XSGO</td>
+<td style="text-align: left;">Chile</td>
+<td style="text-align: left;">CLP</td>
+<td style="text-align: left;">CL</td>
+<td style="text-align: left;">CHL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colombo Stock Exchange</td>
+<td style="text-align: left;">CM</td>
+<td style="text-align: left;">XCOL</td>
+<td style="text-align: left;">Sri Lanka</td>
+<td style="text-align: left;">LKR</td>
+<td style="text-align: left;">LK</td>
+<td style="text-align: left;">LKA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vietnam Stocks</td>
+<td style="text-align: left;">VN</td>
+<td style="text-align: left;">HSTC</td>
+<td style="text-align: left;">Vietnam</td>
+<td style="text-align: left;">VND</td>
+<td style="text-align: left;">VN</td>
+<td style="text-align: left;">VNM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kuala Lumpur Exchange</td>
+<td style="text-align: left;">KLSE</td>
+<td style="text-align: left;">XKLS</td>
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: left;">MYR</td>
+<td style="text-align: left;">MY</td>
+<td style="text-align: left;">MYS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sao Paolo Exchange</td>
+<td style="text-align: left;">SA</td>
+<td style="text-align: left;">BVMF</td>
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: left;">BRL</td>
+<td style="text-align: left;">BR</td>
+<td style="text-align: left;">BRA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bucharest Stock Exchange</td>
+<td style="text-align: left;">RO</td>
+<td style="text-align: left;">XBSE</td>
+<td style="text-align: left;">Romania</td>
+<td style="text-align: left;">RON</td>
+<td style="text-align: left;">RO</td>
+<td style="text-align: left;">ROU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Buenos Aires Exchange</td>
+<td style="text-align: left;">BA</td>
+<td style="text-align: left;">XBUE</td>
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: left;">ARS</td>
+<td style="text-align: left;">AR</td>
+<td style="text-align: left;">ARG</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mexican Exchange</td>
+<td style="text-align: left;">MX</td>
+<td style="text-align: left;">XMEX</td>
+<td style="text-align: left;">Mexico</td>
+<td style="text-align: left;">MXN</td>
+<td style="text-align: left;">MX</td>
+<td style="text-align: left;">MEX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">London IL</td>
+<td style="text-align: left;">IL</td>
+<td style="text-align: left;">XLON</td>
+<td style="text-align: left;">UK</td>
+<td style="text-align: left;">USD</td>
+<td style="text-align: left;">GB</td>
+<td style="text-align: left;">GBR</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zagreb Stock Exchange</td>
+<td style="text-align: left;">ZSE</td>
+<td style="text-align: left;">XZAG</td>
+<td style="text-align: left;">Croatia</td>
+<td style="text-align: left;">HRK</td>
+<td style="text-align: left;">HR</td>
+<td style="text-align: left;">HRV</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EU Bond Virtual Exchange</td>
+<td style="text-align: left;">EUBOND</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">BE</td>
+<td style="text-align: left;">BEL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Indices</td>
+<td style="text-align: left;">INDX</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Istanbul Stock Exchange</td>
+<td style="text-align: left;">IS</td>
+<td style="text-align: left;">XIST</td>
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">TRY</td>
+<td style="text-align: left;">TR</td>
+<td style="text-align: left;">TUR</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bolsa de Valores de Lima</td>
+<td style="text-align: left;">LIM</td>
+<td style="text-align: left;">XLIM</td>
+<td style="text-align: left;">Peru</td>
+<td style="text-align: left;">PEN</td>
+<td style="text-align: left;">PE</td>
+<td style="text-align: left;">PER</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Government Bonds</td>
+<td style="text-align: left;">GBOND</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Borsa Italiana Certificates</td>
+<td style="text-align: left;">ETLX</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Italy</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;">IT</td>
+<td style="text-align: left;">ITA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Money Market Virtual Exchange</td>
+<td style="text-align: left;">MONEY</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Europe Fund Virtual Exchange</td>
+<td style="text-align: left;">EUFUND</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">EUR</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bond Virtual Exchange</td>
+<td style="text-align: left;">BOND</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">USD</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: left;">USA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cryptocurrencies</td>
+<td style="text-align: left;">CC</td>
+<td style="text-align: left;">CRYP</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Commodities</td>
+<td style="text-align: left;">COMM</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FOREX</td>
+<td style="text-align: left;">FOREX</td>
+<td style="text-align: left;">CDSL</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Taiwan OTC Exchange</td>
+<td style="text-align: left;">TWO</td>
+<td style="text-align: left;">ROCO</td>
+<td style="text-align: left;">Taiwan</td>
+<td style="text-align: left;">TWD</td>
+<td style="text-align: left;">TW</td>
+<td style="text-align: left;">TWN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MICEX Moscow Russia</td>
+<td style="text-align: left;">MCX</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Russia</td>
+<td style="text-align: left;">RUB</td>
+<td style="text-align: left;">RU</td>
+<td style="text-align: left;">RUS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Taiwan Exchange</td>
+<td style="text-align: left;">TW</td>
+<td style="text-align: left;">XTAI</td>
+<td style="text-align: left;">Taiwan</td>
+<td style="text-align: left;">TWD</td>
+<td style="text-align: left;">TW</td>
+<td style="text-align: left;">TWN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canadian Securities Exchange</td>
+<td style="text-align: left;">CN</td>
+<td style="text-align: left;">XCNQ</td>
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">CAD</td>
+<td style="text-align: left;">CA</td>
+<td style="text-align: left;">CAN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Lars Nygaard</div>
+  </div>
+</footer>
+
+
+
+</body></html>

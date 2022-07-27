@@ -49,7 +49,7 @@ Plot.plot({
 ```
 
 ```{ojs}
-alphabet = FileAttachment("alphabet.csv").csv()
+alphabet = FileAttachment("data/alphabet.csv").csv()
 alphabet
 Plot.plot({
   marks: [

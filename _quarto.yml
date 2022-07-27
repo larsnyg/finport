@@ -2,13 +2,20 @@ project:
   type: website
 
 website:
-  title: "QuantPortal"
   navbar:
     left:
       - href: index.qmd
         text: Home
+      - text: "Finance"
+        file: viz.qmd
+      - text: "More"
+        menu:
+          - eod.qmd
+          - about.qmd 
+    right: 
       - about.qmd
-      - viz.qmd
+  page-footer: "Copyright 2022, Lars Nygaard"
+
 
 format:
   html:

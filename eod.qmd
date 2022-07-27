@@ -1,0 +1,25 @@
+---
+title: "EOD API"
+author: "Lars"
+editor: visual
+---
+
+### Get data from eodhistoricaldata.com with python eod module
+
+```{r}
+library(ggplot2)
+reticulate::source_python("inst/python/eod_fun.py")
+aapl <- get_prices_eod("AAPL.US")
+aapl$date <- as.Date(aapl$date)
+plot <- ggplot(aapl, aes(date, adjusted_close)) + geom_line() 
+print(plot)
+```
+
+```{r, warning=FALSE}
+library(reticulate)
+reticulate::source_python("inst/python/eod_fun.py")
+
+exchanges <- get_exchanges()
+exchanges <- data.table::rbindlist(exchanges)
+knitr::kable(exchanges)
+```
